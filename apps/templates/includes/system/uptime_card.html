@@ -3,11 +3,12 @@
         <h5 class="card-category">System</h5>
         <h3 class="card-title"><i class="tim-icons icon-minimal-up text-info"></i> Machine Uptime</h3>
     </div>
-    <div class="card-body ">
+    <div class="card-body">
         <div class="container">
-            <h1 id="uptime">
-            </h1>
-
+            <div class="container-fluid">
+                <h1 id="uptime">
+                </h1>
+            </div>
         </div>
     </div>
 </div>
@@ -18,7 +19,7 @@
         type: "GET",
         dataType: "json",
         success: (data) => {
-               document.getElementById("uptime").innerHTML = data['uptime'];
+            document.getElementById("uptime").innerHTML = data['uptime'];
         },
         error: (error) => {
             console.log(error);
