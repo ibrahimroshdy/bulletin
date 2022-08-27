@@ -1,33 +1,35 @@
-<div class="card card-chart">
+<div class="card card-body w-100 h-100">
     <div class="card-header">
-        <h5 class="card-category">Platform Specs</h5>
-        <h3 class="card-title" n><i class="tim-icons icon-laptop text-warning"></i> 3,500€</h3>
+        <h5 class="card-category">System</h5>
+        <h3 class="card-title" n><i class="tim-icons icon-laptop text-primary"></i> Platform Specs </h3>
     </div>
     <div class="card-body">
-        <div class="chart-area">
-            <div class="container">
-                {#                TODO: Add internet big text here #}
-                <h1 class="platform-spec-header-1">
-                    PLATFORM SPECS HERE
-                </h1>
+        <div class="container">
+            <div class="table-responsive">
+                <h6 class="white">PLATFORM SPECS BELOW</h6>
+                <table class='table tablesorter' style='width: 100%' id="platform-spec-table">
+                </table>
             </div>
         </div>
     </div>
 </div>
 
-<script type="text/javascript">
 
+<script type="text/javascript">
     $.ajax({
         url: {% url 'platform_specs' %},
         type: "GET",
         dataType: "json",
         success: (data) => {
-            console.log(data);
-            $('.platform-spec-header-1').html(data['machine']);
+            var content = ""
+            for (const [key, value] of Object.entries(data)) {
+                content += '<tr><th class="text-primary">' +
+                    key + '</th><td class="text-right">' + value + '</td>' + '</tr>';
+            }
+            document.getElementById("platform-spec-table").innerHTML = content;
         },
         error: (error) => {
             console.log(error);
         }
     });
-
 </script>

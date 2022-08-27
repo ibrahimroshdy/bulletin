@@ -1,16 +1,22 @@
-<div class="card card-chart">
+<div class="card card-body w-100 h-100">
     <div class="card-header">
-        <h5 class="card-category">Date Time</h5>
-        <h3 class="card-title"><i class="tim-icons icon-watch-time text-info"></i> 3,500€</h3>
+        <h5 class="card-category">System</h5>
+        <h3 class="card-title"><i class="tim-icons icon-watch-time text-info"></i> Date Time</h3>
     </div>
-    <div class="card-body">
-        <div class="chart-area">
-            <div class="container">
-                {#                TODO: Add internet big text here #}
-                <h1>
-                    DATE TIME HERE
-                </h1>
-            </div>
+    <div class="card-body ">
+        <div class="container">
+            <h1 id="date">
+            </h1>
+
+            <h1 class="center text-primary" id="time">
+            </h1>
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    var options = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
+    var dateObject = new Date();
+    document.getElementById("date").innerHTML = dateObject.toLocaleDateString("en-US", options);
+    document.getElementById("time").innerHTML = dateObject.toLocaleTimeString();
+</script>
