@@ -9,16 +9,19 @@
 {% block content %}
 
 
-    <div class="row">
+    <div class="row ">
         <div class="col-4">
             {% include 'includes/system/date-time-card.html' %}
+            {% include 'includes/system/uptime_card.html' %}
+
+
         </div>
         <div class="col-4">
             {% include 'includes/system/platform-specs_card.html' %}
         </div>
 
-        <div class="col-4">
-            {% include 'includes/system/uptime_card.html' %}
+        <div class="col-4 h-100">
+
         </div>
 
         {#        <div class="col-2">#}
