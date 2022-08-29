@@ -1,30 +1,91 @@
 # system/consumers.py
-import json
+import asyncio
 import datetime
-from uptime import uptime
+import json
 import os
-from channels.generic.websocket import WebsocketConsumer
+
+from channels.generic.websocket import AsyncWebsocketConsumer
+from django.contrib.auth.models import AnonymousUser
+
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings")
-import time
 from . import utils
-from asgiref.sync import async_to_sync,sync_to_async
 
 
-class UptimeConsumer(WebsocketConsumer):
-    def connect(self):
-        self.accept()
-        while True:
-            self.send(text_data=json.dumps({
+class UptimeConsumer(AsyncWebsocketConsumer):
+    """
+    Uptime Consumer
+    """
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(args, kwargs)
+        self.user_id = None
+        self.room_group_name = None
+        self.is_connected = None
+
+    async def connect(self):
+        """
+        Websocket connection
+        :return:
+        """
+        # if self.scope['user'] == AnonymousUser():
+        #     await self.close()
+        #     return
+
+        self.user_id = self.scope['user'].id
+        self.room_group_name = f'BULLETIN_UPTIME_GROUP_NAME_{self.user_id}'
+        await self.channel_layer.group_add(self.room_group_name, self.channel_name)
+
+        await self.accept()
+        self.is_connected = True
+        while self.is_connected:
+            await asyncio.sleep(1)
+
+            await self.send(text_data=json.dumps({
                 'message': utils.machine_uptime_func()
             }))
-            time.sleep(3)
-            # Send message to WebSocket
+
+    async def disconnect(self, code):
+
+        # set is_connected to false
+        self.is_connected = False
+        await self.channel_layer.group_discard(self.room_group_name, self.channel_name)
 
 
-    def disconnect(self, close_code):
-        pass
+class DatetimeConsumer(AsyncWebsocketConsumer):
+    """
+    Datetime Consumer
+    """
 
-    def receive(self, text_data=None, bytes_data=None):
-        pass
+    def __init__(self, *args, **kwargs):
+        super().__init__(args, kwargs)
+        self.user_id = None
+        self.room_group_name = None
+        self.is_connected = None
 
-    # def machine_uptime_message(self):
+    async def connect(self):
+        """
+        Websocket connection
+        :return:
+        """
+        # if self.scope['user'] == AnonymousUser():
+        #     await self.close()
+        #     return
+
+        self.user_id = self.scope['user'].id
+        self.room_group_name = f'BULLETIN_DATETIME_GROUP_NAME_{self.user_id}'
+        await self.channel_layer.group_add(self.room_group_name, self.channel_name)
+
+        await self.accept()
+        self.is_connected = True
+        while self.is_connected:
+            await asyncio.sleep(1)
+
+            await self.send(text_data=json.dumps({
+                'message': datetime.datetime.now()
+            }, indent=4, sort_keys=True, default=str))
+
+    async def disconnect(self, code):
+
+        # set is_connected to false
+        self.is_connected = False
+        await self.channel_layer.group_discard(self.room_group_name, self.channel_name)

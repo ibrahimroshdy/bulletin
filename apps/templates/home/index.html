@@ -7,12 +7,12 @@
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
-
+    {{ request.user.id|json_script:"user_id" }}
 
     <div class="row ">
         <div class="col-4">
-            {% include 'includes/system/date-time-card.html' %}
             {% include 'includes/system/uptime_card.html' %}
+            {% include 'includes/system/date-time-card.html' %}
 
 
         </div>
@@ -69,6 +69,7 @@
             demo.initDashboardPageCharts();
 
         });
+
         {#setTimeout(function () { location.reload(true); }, 5000);#}
 
     </script>
