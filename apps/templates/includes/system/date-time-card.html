@@ -1,23 +1,48 @@
-<div class="card card-body w-100 h-100">
+<div class="card card-body w-100 h-40">
+
     <div class="card-header">
         <h5 class="card-category">System</h5>
         <h3 class="card-title"><i class="tim-icons icon-watch-time text-info"></i> Date Time</h3>
     </div>
+
     <div class="card-body ">
         <div class="container">
             <div class="container-fluid">
-                <h1 id="date">
-                </h1>
-                <h1 class="center text-primary" id="time">
-                </h1>
+                <div class="row">
+                    <div class="col-8">
+                        <h4 id="date">
+                        </h4>
+                    </div>
+                    <div class="col-4">
+                        <h3 class="center text-primary text-right" id="time">
+                        </h3>
+                    </div>
+                </div>
             </div>
+            <span id="date-test"></span>
+            <span id="time-test"></span>
         </div>
     </div>
 </div>
 
 <script type="text/javascript">
+    var dateObject = document.getElementById('date');
+    var timeObject = document.getElementById('time');
     var options = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
-    var dateObject = new Date();
-    document.getElementById("date").innerHTML = dateObject.toLocaleDateString("en-US", options);
-    document.getElementById("time").innerHTML = dateObject.toLocaleTimeString();
+
+
+    function time() {
+        var d = new Date();
+        var date = d.getDate()
+        var s = d.getSeconds();
+        var m = d.getMinutes();
+        var h = d.getHours();
+
+        dateObject.textContent = d.toLocaleDateString("en-US", options);
+        timeObject.textContent =
+            ("0" + h).substr(-2) + ":" + ("0" + m).substr(-2) + ":" + ("0" + s).substr(-2);
+
+    }
+
+    setInterval(time, 1000);
 </script>
