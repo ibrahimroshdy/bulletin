@@ -1,26 +1,29 @@
-const user_id2 = JSON.parse(document.getElementById('user_id').textContent);
-console.log(user_id2)
+var uptimeDays = document.getElementById("uptime-days")
+var uptime = document.getElementById("uptime")
+const machineUptimeUser = JSON.parse(document.getElementById('user_id').textContent);
 
 
 const machineUptimeSocket = new WebSocket(
     'ws://'
     + window.location.host
     + '/ws/machine_uptime/'
-    + user_id2
+    + machineUptimeUser
     + '/'
 );
 
 machineUptimeSocket.onmessage = function (e) {
-
-
     const data = JSON.parse(e.data);
 
-    uptimeDays = "<h4>" + data.message['days'] + "\t days</h4>"
-    uptime = "<h4 class='text-primary'>" + data.message['hours'] + ":\t" + data.message['minutes'] + ":\t" + data.message['seconds'] + "</h4>"
+    var d = data.message['days']
+    var s = data.message['seconds']
+    var m = data.message['minutes']
+    var h = data.message['hours']
 
-    document.getElementById("uptime-days").innerHTML = uptimeDays
-    document.getElementById("uptime").innerHTML = uptime
+    uptimeDays.textContent = d + "\t days"
+    uptime.textContent = ("0" + h).substr(-2) + ":" + ("0" + m).substr(-2) + ":" + ("0" + s).substr(-2);
+
 };
+
 machineUptimeSocket.onclose = function (event) {
     if (event.wasClean) {
         console.log(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
@@ -30,6 +33,7 @@ machineUptimeSocket.onclose = function (event) {
         console.log('[close] Connection died');
     }
 };
+
 window.onbeforeunload = function () {
     machineUptimeSocket.onclose = function () {
     }; // disable onclose handler first

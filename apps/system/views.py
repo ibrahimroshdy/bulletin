@@ -36,7 +36,6 @@ def machine_uptime(request):
     """
     response = {
         'uptime': str(datetime.timedelta(seconds=uptime()))
-
     }
 
     return HttpResponse(json.dumps(response), content_type="application/json")

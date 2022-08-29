@@ -5,7 +5,6 @@ import json
 import os
 
 from channels.generic.websocket import AsyncWebsocketConsumer
-from django.contrib.auth.models import AnonymousUser
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings")
 from . import utils
@@ -27,6 +26,7 @@ class UptimeConsumer(AsyncWebsocketConsumer):
         Websocket connection
         :return:
         """
+        # TODO: Check for AnonymousUser
         # if self.scope['user'] == AnonymousUser():
         #     await self.close()
         #     return
@@ -38,11 +38,10 @@ class UptimeConsumer(AsyncWebsocketConsumer):
         await self.accept()
         self.is_connected = True
         while self.is_connected:
-            await asyncio.sleep(1)
-
             await self.send(text_data=json.dumps({
                 'message': utils.machine_uptime_func()
             }))
+            await asyncio.sleep(3)
 
     async def disconnect(self, code):
 
@@ -67,6 +66,7 @@ class DatetimeConsumer(AsyncWebsocketConsumer):
         Websocket connection
         :return:
         """
+        # TODO: Check for AnonymousUser
         # if self.scope['user'] == AnonymousUser():
         #     await self.close()
         #     return
