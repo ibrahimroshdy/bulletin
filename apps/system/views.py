@@ -17,12 +17,10 @@ def platform_specs(request):
     :return: a multi-object dict containing platform specs as str
     """
     response = {
-        'machine': platform.machine(),
         'platform': platform.platform(),
         'system': platform.system(),
-        # 'architecture': platform.architecture(),
-        # 'processor': platform.processor(),
-        # 'release': platform.release(),
+        'python_version': platform.python_version(),
+
     }
 
     return HttpResponse(json.dumps(response), content_type="application/json")

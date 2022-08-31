@@ -1,0 +1,2 @@
+from .abstract_speeedtest import AbstractSpeedtest
+from .function_methods import process_speedtest_test

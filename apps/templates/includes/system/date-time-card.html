@@ -1,28 +1,28 @@
-<div class="card card-body w-100 h-40">
-
+<div class="card card-body">
     <div class="card-header">
         <h5 class="card-category">System</h5>
         <h3 class="card-title"><i class="tim-icons icon-watch-time text-info"></i> Date Time</h3>
     </div>
 
-    <div class="card-body ">
+    <div class="card-body">
         <div class="container">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-8">
-                        <h4 id="date">
-                        </h4>
+                    <div class="col-sm-8 col-md-8 col-lg-8 col-xl-6">
+                        <h6 id="date">
+                        </h6>
                     </div>
-                    <div class="col-4">
-                        <h3 class="center text-primary text-right" id="time">
-                        </h3>
+                    <div class="col-sm-8 col-md-8 col-lg-8 col-xl-6">
+                        <h6 class="center text-primary text-right" id="time">
+                        </h6>
                     </div>
                 </div>
             </div>
-            <span id="date-test"></span>
-            <span id="time-test"></span>
         </div>
     </div>
+{#    <div class="card-footer">#}
+{##}
+{#    </div>#}
 </div>
 
 <script type="text/javascript">
@@ -39,8 +39,7 @@
         var h = d.getHours();
 
         dateObject.textContent = d.toLocaleDateString("en-US", options);
-        timeObject.textContent =
-            ("0" + h).substr(-2) + ":" + ("0" + m).substr(-2) + ":" + ("0" + s).substr(-2);
+        timeObject.textContent = ("0" + h).substr(-2) + ":" + ("0" + m).substr(-2) + ":" + ("0" + s).substr(-2);
 
     }
 

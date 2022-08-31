@@ -1,0 +1,48 @@
+<div class="card card-body">
+    <div class="card-header">
+        <h5 class="card-category">Internet Speedtest</h5>
+        <h3 class="card-title"><i class="tim-icons icon-spaceship text-primary"></i> Speed Aggergations </h3>
+    </div>
+
+    <div class="card-body">
+        <div class="container">
+            <h6 class="white">
+                Internet Speedtest Agreegations Below
+            </h6>
+            <div class="container-fluid" id="weekly-internet-speedtest-agg">
+            </div>
+        </div>
+    </div>
+    <hr style="background-color: rgba(108,107,108,0.31)">
+    <div class="card-footer font-weight-bold text-right">
+        AGGREGATED DATA USED: LAST 7 DAYS
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    $.ajax({
+        url: {% url 'latest_week_internet_speedtests_agg' %},
+        type: "GET",
+        dataType: "json",
+        success: (data) => {
+            var content = ""
+            for (const [key, value] of Object.entries(data)) {
+                content += '<div class="row">'
+                for (const [k, v] of Object.entries(value)) {
+                    if (key == 'order') {
+                        content += '<div class="col"><h6 class="text-primary text-left">' + v + '</h6></div>'
+                    } else {
+                        content += '<div class="col"><h6 class="text-white text-left">' + key + '</h6></div>'
+                        content += '<div class="col"><h6 class="text-white text-left">' + parseFloat(v).toFixed(2) + '</h6></div>'
+                    }
+                }
+                content += "</div>"
+            }
+            document.getElementById("weekly-internet-speedtest-agg").innerHTML = content;
+        },
+        error: (error) => {
+            console.log(error);
+        }
+    });
+</script>

@@ -45,10 +45,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'import_export',
     'daphne',
     'channels',
     'apps.home.config.HomeConfig',
     'apps.system.config.SystemConfig',
+    'apps.internet_speedtester.config.InternetSpeedtesterConfig',
 ]
 
 MIDDLEWARE = [
@@ -138,7 +140,7 @@ LANGUAGE_CODE = 'en-us'
 TIME_ZONE = "Africa/Cairo"
 USE_I18N = True
 USE_L10N = True
-USE_TZ = True
+USE_TZ = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
