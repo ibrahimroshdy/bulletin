@@ -56,10 +56,10 @@ gradientStroke.addColorStop(1, 'rgba(72,72,176,0.2)');
 gradientStroke.addColorStop(0.2, 'rgba(72,72,176,0.0)');
 gradientStroke.addColorStop(0, 'rgba(119,52,169,0)'); //purple colors
 
-// Ajax callback function uses callAjax to retreive data from a view/api then draw it 
+// Ajax callback function uses getLatestWeekSpeedtestAjax to retreive data from a view/api then draw it
 ajaxCallback()
 
-function callAjax(callback) {
+function getLatestWeekSpeedtestAjax(callback) {
     $.ajax({
         url: window.location.href +
             'latest_week_internet_speedtests/',
@@ -77,17 +77,17 @@ function callAjax(callback) {
 };
 
 function ajaxCallback() {
-    callAjax(function (d) {
+    getLatestWeekSpeedtestAjax(function (response) {
         //processing the data
-        console.log(d);
+        console.log(response);
         var labels = [];
         var downloadData = [];
         var uploadData = [];
 
-        for (var item in d) {
-            labels.push(d[item].created)
-            downloadData.push(d[item].download)
-            uploadData.push(d[item].upload)
+        for (var item in response) {
+            labels.push(response[item].created)
+            downloadData.push(response[item].download)
+            uploadData.push(response[item].upload)
         }
         // drawChart uses the labes, (datasets) to draw—assign data to chart HTML element
         drawChart(labels, downloadData, uploadData);
@@ -144,6 +144,5 @@ function drawChart(labels, downloadData, uploadData) {
         data: chartData,
         options: gradientChartOptionsConfiguration
     });
-
 
 };
