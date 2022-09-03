@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'apps.home.config.HomeConfig',
     'apps.system.config.SystemConfig',
     'apps.internet_speedtester.config.InternetSpeedtesterConfig',
+    'apps.weather.config.WeatherConfig',
 ]
 
 MIDDLEWARE = [
