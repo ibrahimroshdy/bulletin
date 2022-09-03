@@ -27,12 +27,13 @@
             var content = ''
             content += '<h6><i class="tim-icons icon-vector text-primary"></i>\t' + data.isp + '</h6>'
             content += '<h6><i class="tim-icons icon-planet text-primary"></i>\t' + data.ip + '</h6>'
-            content += '<h6><i class="tim-icons icon-cloud-download-93 text-primary"></i>\t' + data.download + '</h6>'
-            content += '<h6><i class="tim-icons icon-cloud-upload-94 text-primary"></i>\t' + data.upload + '</h6>'
+            content += '<h6 class="text-primary"><i class="tim-icons icon-cloud-download-93 text-primary"></i>\t' + data.download + '</h6>'
+            content += '<h6 style="color: #d0c548"><i class="tim-icons icon-cloud-upload-94" style="color: #d0c548"></i>\t' + data.upload + '</h6>'
             content += '<br>'
 
             var createdDate = new Date(data.created);
-            var footer = createdDate.toLocaleString();
+            var options = {year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'};
+            var footer = createdDate.toLocaleString("en-US", options);
             document.getElementById("latest-internet-speedtest").innerHTML = content;
             document.getElementById("latest-internet-speedtest-footer").innerHTML = footer;
         },

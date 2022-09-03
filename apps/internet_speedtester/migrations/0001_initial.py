@@ -17,7 +17,8 @@ class Migration(migrations.Migration):
                 name='ClientModel',
                 fields=[
                     (
-                    'id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                        'id',
+                        models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                     ('created', model_utils.fields.AutoCreatedField(default=django.utils.timezone.now, editable=False,
                                                                     verbose_name='created')),
                     ('modified',
@@ -63,7 +64,8 @@ class Migration(migrations.Migration):
                 name='SpeedtesterModel',
                 fields=[
                     (
-                    'id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                        'id',
+                        models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                     ('created', model_utils.fields.AutoCreatedField(default=django.utils.timezone.now, editable=False,
                                                                     verbose_name='created')),
                     ('modified',
