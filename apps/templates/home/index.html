@@ -11,18 +11,21 @@
 
     <div class="row">
         {#    TODO: FIX Alignment of datetime card and machine uptime card, the date is too long makes the card longer than the machine time #}
-        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+        <div class="col-sm-12 col-md-4 col-lg-4 col-xl-5">
             {% include 'includes/system/date-time-card.html' %}
         </div>
-        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+        <div class="col-sm-6 col-md-4 col-lg-4 col-xl-3">
             {% include 'includes/system/machine-uptime-card.html' %}
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-4 col-xl-2">
+            {% include 'includes/weather/weather-card.html' %}
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-4 col-xl-2">
+            {% include 'includes/weather/weather-conditions-card.html' %}
         </div>
 
     </div>
     <div class="row">
-{#        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-4">#}
-{#            {% include 'includes/system/platform-specs-card.html' %}#}
-{#        </div>#}
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-5">
             {% include 'includes/internet_speed/weekly-internet-speedtest-chart-card.html' %}
         </div>
@@ -32,7 +35,11 @@
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-4">
             {% include 'includes/internet_speed/weekly-internet-speedtest-agg-card.html' %}
         </div>
-
+        {#        <div class="row">#}
+        {#            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-6">#}
+        {#                {% include 'includes/weather/weather-card.html' %}#}
+        {#            </div>#}
+        {#        </div>#}
     </div>
     {#    <div class="row">#}
     {#        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-4">#}
