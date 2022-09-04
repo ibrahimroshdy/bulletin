@@ -1,19 +1,19 @@
-build:
-  docker:
-    web: Dockerfile
+#build:
+#  docker:
+#    web: Dockerfile
 #release:
 #  image: web
 #  command:
 #    - python manage.py migrate
 #    - python manage.py collectstatic
 
-#run:
-#  web: python manage.py runserver 0.0.0.0:$PORT
-#  worker:
-#    command:
-#      - celery --app=my_app worker --pool=prefork --concurrency=4 --statedb=celery/worker.state -l info
-#    image: web
-#  worker:
-#    command:
-#      - celery --app=my_app beat -l info
-#    image: web
+run:
+  web: daphne -b 0.0.0.0 -p $PORT  -t 60 --application-close-timeout 60 core.asgi:application
+  worker:
+    command:
+      - celery --app=my_app worker --pool=prefork --concurrency=4 --statedb=celery/worker.state -l info
+    image: web
+  worker:
+    command:
+      - celery --app=my_app beat -l info
+    image: web

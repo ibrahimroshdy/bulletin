@@ -7,7 +7,7 @@ RUN apt-get update \
 && apt-get install -y --no-install-recommends git libpq-dev\
 && apt-get purge -y --auto-remove \
 && rm -rf /var/lib/apt/lists/*
-COPY .git /app/.git
+COPY ../.git /app/.git
 
 # 2. Python packages and virtual env setup
 FROM base as sys_setup
@@ -26,7 +26,7 @@ RUN pip install poetry && \
     poetry config virtualenvs.create false
 
 # copy poetry packages file
-COPY pyproject.toml ./
+COPY ../pyproject.toml ./
 RUN poetry install --no-interaction --no-ansi
 
 # Multistage build
@@ -44,12 +44,12 @@ WORKDIR /app
 # copying working files at workdir
 
 # Django
-COPY manage.py .
-COPY core core
-COPY apps apps
+COPY ../manage.py .
+COPY ../core core
+COPY ../apps apps
 
 # Entrypoint script
-COPY ./scripts/entrypoint.sh .
+COPY ../scripts/entrypoint.sh .
 
 # Make file executable
 RUN chmod +x entrypoint.sh
