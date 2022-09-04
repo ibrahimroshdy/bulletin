@@ -7,12 +7,11 @@ release:
     - python manage.py migrate
     - python manage.py collectstatic
 
-#run:
-#  web: python manage.py runserver 0.0.0.0:$PORT
-#  worker:
-#    command:
-#      - celery --app=my_app worker --pool=prefork --concurrency=4 --statedb=celery/worker.state -l info
-#    image: web
+run:
+  internetspeedtest:
+    command:
+      - python -m apps.internet_speedtester.tasks
+    image: web
 #  worker:
 #    command:
 #      - celery --app=my_app beat -l info
