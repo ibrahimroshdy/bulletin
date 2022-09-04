@@ -4,8 +4,8 @@ services:
   # Bulletin Backend Service
   bulletin:
     build:
-      context: ..
-      dockerfile: docker/Dockerfile
+      context: .
+      dockerfile: ./Dockerfile
     container_name: bulletin
     restart: always
     ports:

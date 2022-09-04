@@ -1,9 +1,19 @@
-# Resources to provision on app creation
-#setup:
-#  addons:
-#  config:
-#    DATABASE_URL: my-example-bucket
-
 build:
   docker:
-    web: docker/Dockerfile
+    web: Dockerfile
+#release:
+#  image: web
+#  command:
+#    - python manage.py migrate
+#    - python manage.py collectstatic
+
+#run:
+#  web: python manage.py runserver 0.0.0.0:$PORT
+#  worker:
+#    command:
+#      - celery --app=my_app worker --pool=prefork --concurrency=4 --statedb=celery/worker.state -l info
+#    image: web
+#  worker:
+#    command:
+#      - celery --app=my_app beat -l info
+#    image: web
