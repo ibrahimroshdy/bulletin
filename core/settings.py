@@ -33,6 +33,8 @@ ALLOWED_HOSTS = ["localhost",
                  "thebulletin.herokuapp.com",
                  os.environ.get("ALLOWED_URL", "thebulletin.herokuapp.com")]
 
+CSRF_TRUSTED_ORIGINS = ['https://*.herokuapp.com']
+
 # Assets Management
 ASSETS_ROOT = os.getenv('ASSETS_ROOT', '/static/assets')
 
