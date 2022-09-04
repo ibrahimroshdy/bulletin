@@ -8,9 +8,9 @@ release:
     - python manage.py collectstatic
 
 run:
-  worker:
+  internetspeedtester:
     command:
-      - cd app && python -m apps.internet_speedtester.tasks
+      - "cd app && python -m apps.internet_speedtester.tasks"
     image: web
 #  worker:
 #    command:
