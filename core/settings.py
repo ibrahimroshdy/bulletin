@@ -30,7 +30,7 @@ DEBUG = bool(os.environ.get("DEBUG", 'true').lower() == 'true')
 ALLOWED_HOSTS = ["localhost",
                  "127.0.0.1",
                  "0.0.0.0",
-                 "192.168.1.13",
+                 "thebulletin.herokuapp.com",
                  os.environ.get("ALLOWED_URL", "thebulletin.herokuapp.com")]
 
 # Assets Management
