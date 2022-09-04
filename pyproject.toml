@@ -5,6 +5,7 @@ description = "A bulletin project built by Django to display a dashboard that in
 authors = ["ibrahimroshdy <ibrahimabdelrahman@aucegypt.edu>"]
 license = "MIT"
 
+
 [tool.poetry.dependencies]
 python = "^3.9"
 dj-database-url = "^1.0.0"
