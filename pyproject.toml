@@ -26,6 +26,7 @@ django-import-export = "^2.8.0"
 pyfiglet = "^0.8.post1"
 coverage = "^6.4.4"
 codecov = "^2.1.12"
+psycopg2-binary = "^2.9.3"
 
 [tool.poetry.dev-dependencies]
 
