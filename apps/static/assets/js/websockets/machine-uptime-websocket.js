@@ -4,7 +4,7 @@ const machineUptimeUser = JSON.parse(document.getElementById('user_id').textCont
 
 
 const machineUptimeSocket = new WebSocket(
-    'ws://'
+    'wss://'
     + window.location.host
     + '/ws/machine_uptime/'
     + machineUptimeUser

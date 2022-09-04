@@ -11,7 +11,7 @@ function success(pos) {
         console.log(response)
         document.getElementById("temp").innerHTML = response.main.temp.toFixed(0) + '&deg;';
         document.getElementById("location-name").textContent = response.name;
-        document.getElementById("condition-icon").src = "http://openweathermap.org/img/wn/" + response.weather[0].icon + "@4x.png";
+        document.getElementById("condition-icon").src = "https://openweathermap.org/img/wn/" + response.weather[0].icon + "@4x.png";
         document.getElementById("wind").textContent = response.wind.speed + "kph";
         document.getElementById("condition-text").innerHTML = response.weather[0].main;
 
@@ -28,7 +28,7 @@ navigator.geolocation.getCurrentPosition(success, error, navigatorOptions);
 //TODO: api key to env varible
 function getWeatherByLocAjax(crd, callback) {
     $.ajax({
-        url: "http://api.openweathermap.org/data/2.5/weather?" + "" +
+        url: "https://api.openweathermap.org/data/2.5/weather?" + "" +
             "lat=" + crd.latitude +
             "&lon=" + crd.longitude +
             "&units=metric" +
