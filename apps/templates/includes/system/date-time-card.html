@@ -1,0 +1,47 @@
+<div class="card card-body">
+    <div class="card-header">
+        <h5 class="card-category">System</h5>
+        <h3 class="card-title"><i class="tim-icons icon-watch-time text-info"></i> Date Time</h3>
+    </div>
+
+    <div class="card-body">
+        <div class="container">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                        <h6 id="date">
+                        </h6>
+                    </div>
+                    <div class="col-sm-8 col-md-8 col-lg-8 col-xl-4">
+                        <h6 class="center text-info text-right" id="time">
+                        </h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{#    <div class="card-footer">#}
+{##}
+{#    </div>#}
+</div>
+
+<script type="text/javascript">
+    var dateObject = document.getElementById('date');
+    var timeObject = document.getElementById('time');
+    var options = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
+
+
+    function time() {
+        var d = new Date();
+        var date = d.getDate()
+        var s = d.getSeconds();
+        var m = d.getMinutes();
+        var h = d.getHours();
+
+        dateObject.textContent = d.toLocaleDateString("en-US", options);
+        timeObject.textContent = ("0" + h).substr(-2) + ":" + ("0" + m).substr(-2) + ":" + ("0" + s).substr(-2);
+
+    }
+
+    setInterval(time, 1000);
+</script>

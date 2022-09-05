@@ -5,6 +5,7 @@ description = "A bulletin project built by Django to display a dashboard that in
 authors = ["ibrahimroshdy <ibrahimabdelrahman@aucegypt.edu>"]
 license = "MIT"
 
+
 [tool.poetry.dependencies]
 python = "^3.9"
 dj-database-url = "^1.0.0"
@@ -14,6 +15,18 @@ gunicorn = "^20.1.0"
 asgiref = "^3.5.2"
 psutil = "^5.9.1"
 uptime = "^3.0.1"
+channels = "^3.0.5"
+daphne = "^3.0.2"
+asyncio = "^3.4.3"
+django-model-utils = "^4.2.0"
+loguru = "^0.6.0"
+model-bakery = "^1.7.0"
+speedtest-cli = "^2.1.3"
+django-import-export = "^2.8.0"
+pyfiglet = "^0.8.post1"
+coverage = "^6.4.4"
+codecov = "^2.1.12"
+psycopg2-binary = "^2.9.3"
 
 [tool.poetry.dev-dependencies]
 

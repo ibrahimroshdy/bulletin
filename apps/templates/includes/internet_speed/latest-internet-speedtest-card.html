@@ -1,0 +1,44 @@
+<div class="card card-body">
+    <div class="card-header">
+        <h5 class="card-category">Internet Speedtest</h5>
+        <h3 class="card-title"><i class="tim-icons icon-wifi text-primary"></i> Latest Speedtest </h3>
+    </div>
+
+    <div class="card-body">
+        <div class="container">
+            <h6 class="white">
+                Latest Internet Speedtest Below
+            </h6>
+            <div class="container-fluid" id="latest-internet-speedtest">
+            </div>
+        </div>
+    </div>
+    <hr style="background-color: rgba(108,107,108,0.31)">
+    <div class="card-footer font-weight-bold text-right" id="latest-internet-speedtest-footer">
+    </div>
+</div>
+
+<script type="text/javascript">
+    $.ajax({
+        url: {% url 'latest_speedtest' %},
+        type: "GET",
+        dataType: "json",
+        success: (data) => {
+            var content = ''
+            content += '<h6><i class="tim-icons icon-vector text-primary"></i>\t' + data.isp + '</h6>'
+            content += '<h6><i class="tim-icons icon-planet text-primary"></i>\t' + data.ip + '</h6>'
+            content += '<h6 class="text-primary"><i class="tim-icons icon-cloud-download-93 text-primary"></i>\t' + data.download + '</h6>'
+            content += '<h6 style="color: #d0c548"><i class="tim-icons icon-cloud-upload-94" style="color: #d0c548"></i>\t' + data.upload + '</h6>'
+            content += '<br>'
+
+            var createdDate = new Date(data.created);
+            var options = {year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'};
+            var footer = createdDate.toLocaleString("en-US", options);
+            document.getElementById("latest-internet-speedtest").innerHTML = content;
+            document.getElementById("latest-internet-speedtest-footer").innerHTML = footer;
+        },
+        error: (error) => {
+            console.log(error);
+        }
+    });
+</script>
