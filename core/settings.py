@@ -30,8 +30,10 @@ DEBUG = bool(os.environ.get("DEBUG", 'true').lower() == 'true')
 ALLOWED_HOSTS = ["localhost",
                  "127.0.0.1",
                  "0.0.0.0",
-                 "192.168.1.13",
-                 os.environ.get("ALLOWED_URL", "")]
+                 "thebulletin.herokuapp.com",
+                 os.environ.get("ALLOWED_URL", "thebulletin.herokuapp.com")]
+
+CSRF_TRUSTED_ORIGINS = ['https://*.herokuapp.com']
 
 # Assets Management
 ASSETS_ROOT = os.getenv('ASSETS_ROOT', '/static/assets')
@@ -51,6 +53,7 @@ INSTALLED_APPS = [
     'apps.home.config.HomeConfig',
     'apps.system.config.SystemConfig',
     'apps.internet_speedtester.config.InternetSpeedtesterConfig',
+    'apps.weather.config.WeatherConfig',
 ]
 
 MIDDLEWARE = [
