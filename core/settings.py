@@ -29,7 +29,11 @@ DEBUG = bool(os.environ.get("DEBUG", 'true').lower() == 'true')
 
 ALLOWED_HOSTS = ["localhost",
                  "127.0.0.1",
-                 os.environ.get("ALLOWED_URL", "")]
+                 "0.0.0.0",
+                 "thebulletin.herokuapp.com",
+                 os.environ.get("ALLOWED_URL", "thebulletin.herokuapp.com")]
+
+CSRF_TRUSTED_ORIGINS = ['https://*.herokuapp.com']
 
 # Assets Management
 ASSETS_ROOT = os.getenv('ASSETS_ROOT', '/static/assets')
@@ -43,11 +47,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'import_export',
+    'daphne',
+    'channels',
+    'apps.home.config.HomeConfig',
+    'apps.system.config.SystemConfig',
+    'apps.internet_speedtester.config.InternetSpeedtesterConfig',
+    'apps.weather.config.WeatherConfig',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    # 'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -57,16 +68,14 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'core.urls'
-# LOGIN_REDIRECT_URL = "home"  # Route defined in home/urls.py
-# LOGOUT_REDIRECT_URL = "home"  # Route defined in home/urls.py
-# TEMPLATE_DIR = os.path.join(CORE_DIR, "apps/templates")  # ROOT dir for templates
-#
+LOGIN_REDIRECT_URL = "home"  # Route defined in home/urls.py
+LOGOUT_REDIRECT_URL = "home"  # Route defined in home/urls.py
+TEMPLATE_DIR = os.path.join(CORE_DIR, "apps/templates")  # ROOT dir for templates
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
+        'DIRS': [TEMPLATE_DIR],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -74,12 +83,28 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'apps.context_processors.cfg_assets_root',
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'core.wsgi.application'
+# WSGI_APPLICATION = 'core.wsgi.application'
+ASGI_APPLICATION = 'core.asgi.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        ### Method 1: Via local Redis
+        # 'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        # 'CONFIG': {
+        #      "hosts": [('127.0.0.1', 6379)],
+        # },
+
+        ### Method 2: Via In-memory channel layer
+        ## Using this method.
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    },
+}
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -118,13 +143,17 @@ LANGUAGE_CODE = 'en-us'
 TIME_ZONE = "Africa/Cairo"
 USE_I18N = True
 USE_L10N = True
-USE_TZ = True
+USE_TZ = False
 
-# Static files setup (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.0/howto/static-files/
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.9/howto/static-files/
+STATIC_ROOT = os.path.join(CORE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'apps/static'), ]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Extra places for collectstatic to find static files.
+STATICFILES_DIRS = (
+    os.path.join(CORE_DIR, 'apps/static'),
+)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

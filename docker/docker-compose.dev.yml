@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  # Bulletin Backend Service
+  bulletin:
+    build:
+      context: ..
+      dockerfile: ../Dockerfile
+    container_name: bulletin
+    restart: always
+    ports:
+      - 8000:8000
+    environment:
+      - SECRET_KEY=aahckjadf^^^changeinproduction^^ajshjdjkhaskjdh
+      - DEBUG=True
+#      - DATABASE_URL=postgres://bulletin:bulletin@postgres:5432/bulletin
+      - REDIS_SERVER_HOST=redis
+    volumes:
+      - media:/app/media
+
+volumes:
+  media:
+    external: false
