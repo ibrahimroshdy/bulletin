@@ -1,10 +1,12 @@
 var uptimeDays = document.getElementById("uptime-days")
 var uptime = document.getElementById("uptime")
 const machineUptimeUser = JSON.parse(document.getElementById('user_id').textContent);
-
-
+var websocketProtocol = 'ws://'
+if (location.protocol === 'https:') {
+    websocketProtocol = 'wss://'
+}
 const machineUptimeSocket = new WebSocket(
-    'wss://'
+    websocketProtocol
     + window.location.host
     + '/ws/machine_uptime/'
     + machineUptimeUser
