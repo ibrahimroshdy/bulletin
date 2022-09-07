@@ -5,7 +5,7 @@ services:
   bulletin:
     build:
       context: ..
-      dockerfile: ../Dockerfile
+      dockerfile: Dockerfile
     container_name: bulletin
     restart: always
     ports:
