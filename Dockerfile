@@ -7,8 +7,7 @@ RUN apt-get update \
 && apt-get install -y --no-install-recommends git libpq-dev\
 && apt-get purge -y --auto-remove \
 && rm -rf /var/lib/apt/lists/*
-RUN ls home
-#COPY ../.git /app/.git
+COPY ../.git /app/.git
 
 # 2. Python packages and virtual env setup
 FROM base as sys_setup
