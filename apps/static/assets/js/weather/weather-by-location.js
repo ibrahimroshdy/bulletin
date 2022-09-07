@@ -1,9 +1,4 @@
-const navigatorOptions = {
-    enableHighAccuracy: true,
-    timeout: 5000,
-    maximumAge: 0
-};
-
+// ************************  START OF FUNCTIONS ************************
 function success(pos) {
     const crd = pos.coords;
 
@@ -22,8 +17,6 @@ function success(pos) {
 function error(err) {
     console.warn(`ERROR(${err.code}): ${err.message}`);
 }
-
-navigator.geolocation.getCurrentPosition(success, error, navigatorOptions);
 
 //TODO: api key to env varible
 function getWeatherByLocAjax(crd, callback) {
@@ -45,6 +38,11 @@ function getWeatherByLocAjax(crd, callback) {
     });
 
 };
+// ************************  END OF FUNCTIONS ************************
 
-// function ajaxCallback() {
-// };
+const navigatorOptions = {
+    enableHighAccuracy: true,
+    timeout: 5000,
+    maximumAge: 0
+};
+navigator.geolocation.getCurrentPosition(success, error, navigatorOptions);
