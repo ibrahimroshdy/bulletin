@@ -78,8 +78,8 @@ class AbstractTweepy:
 
             return response
         except tweepy.errors.Unauthorized as UNA:
-            logger.error(UNA)
+            logger.error(f'WRONG CONSUMER KEY/SECRET {UNA}')
             return response
         except tweepy.errors.BadRequest as BR:
-            logger.error(BR)
+            logger.error(f'WRONG ACCESS KEY/SECRET {BR}')
             return response
