@@ -57,9 +57,10 @@ jobs:
           tag:
             ${{ github.ref_name }}
       - name: Run tests
-        run: docker run ghcr.io/${{ github.repository }}:${{ github.ref_name }} /bin/bash -c "coverage run manage.py test apps
-          && codecov --token=${{ secrets.codecov_token }}"
-          -e TWT_CONSUMER_KEY=${{ secrets.twt_consumer_key }}
-          -e TWT_CONSUMER_SECRET=${{ secrets.twt_consumer_secret }}
-          -e TWT_ACCESS_KEY=${{ secrets.twt_access_key }}
-          -e TWT_ACCESS_SECRET=${{ secrets.twt_access_secret }}
+        run: docker run ghcr.io/${{ github.repository }}:${{ github.ref_name }}
+          -e TWT_CONSUMER_KEY=${{ secrets.TWT_CONSUMER_KEY }}
+          -e TWT_CONSUMER_SECRET=${{ secrets.TWT_CONSUMER_SECRET }}
+          -e TWT_ACCESS_KEY=${{ secrets.TWT_ACCESS_KEY }}
+          -e TWT_ACCESS_SECRET=${{ secrets.TWT_ACCESS_SECRET }}
+          /bin/bash -c "coverage run manage.py test apps && codecov --token=${{ secrets.codecov_token }}"
+
