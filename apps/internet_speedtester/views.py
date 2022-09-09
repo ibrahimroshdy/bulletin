@@ -2,7 +2,6 @@
 
 import json
 
-from django.core import serializers
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models import Avg, Max, Min, StdDev
 from django.http import JsonResponse
