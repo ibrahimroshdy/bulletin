@@ -27,4 +27,5 @@ urlpatterns = [
     path("", include("apps.home.urls")),
     path("", include("apps.system.urls")),
     path("", include("apps.internet_speedtester.urls")),
+    path("", include("apps.social.urls")),
 ]

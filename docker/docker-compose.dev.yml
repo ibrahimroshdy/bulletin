@@ -5,12 +5,13 @@ services:
   bulletin:
     build:
       context: ..
-      dockerfile: ../Dockerfile
+      dockerfile: Dockerfile
     container_name: bulletin
     restart: always
     ports:
       - 8000:8000
     environment:
+      - PORT=8000
       - SECRET_KEY=aahckjadf^^^changeinproduction^^ajshjdjkhaskjdh
       - DEBUG=True
 #      - DATABASE_URL=postgres://bulletin:bulletin@postgres:5432/bulletin
