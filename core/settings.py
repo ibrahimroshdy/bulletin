@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'apps.system.config.SystemConfig',
     'apps.internet_speedtester.config.InternetSpeedtesterConfig',
     'apps.weather.config.WeatherConfig',
+    'apps.social.config.SocialConfig',
 ]
 
 MIDDLEWARE = [
@@ -159,3 +160,9 @@ STATICFILES_DIRS = (
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Social/Twitter Access Token Variables
+TWT_CONSUMER_KEY = os.environ.get("TWT_CONSUMER_KEY", "")
+TWT_CONSUMER_SECRET = os.environ.get("TWT_CONSUMER_SECRET", "")
+TWT_ACCESS_KEY = os.environ.get("TWT_ACCESS_KEY", "")
+TWT_ACCESS_SECRET = os.environ.get("TWT_ACCESS_SECRET", "")
