@@ -10,7 +10,7 @@ release:
 run:
   internetspeedtester:
     command:
-      - "cd app && python -m apps.internet_speedtester.tasks"
+      - "python -m core.tasks"
     image: web
 #  worker:
 #    command:
