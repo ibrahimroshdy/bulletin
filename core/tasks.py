@@ -2,7 +2,7 @@
 Timeloop based scheduled tasks
 """
 from datetime import timedelta
-
+import time
 import timeloop
 from loguru import logger
 
@@ -24,4 +24,7 @@ def internet_speedtests():
 
 if __name__ == "__main__":
     while True:
-        tl.start(block=True)
+        try:
+            tl.start()
+        except RuntimeError:
+            time.sleep(2000)
