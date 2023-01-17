@@ -30,10 +30,9 @@ DEBUG = bool(os.environ.get("DEBUG", 'true').lower() == 'true')
 ALLOWED_HOSTS = ["localhost",
                  "127.0.0.1",
                  "0.0.0.0",
-                 "thebulletin.herokuapp.com",
                  os.environ.get("ALLOWED_URL", "bulletin-z3el.onrender.com")]
 
-CSRF_TRUSTED_ORIGINS = ['https://*.herokuapp.com']
+CSRF_TRUSTED_ORIGINS = ['https://*.onrender.com']
 
 # Assets Management
 ASSETS_ROOT = os.getenv('ASSETS_ROOT', '/static/assets')
