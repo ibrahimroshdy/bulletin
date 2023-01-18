@@ -32,7 +32,7 @@ ALLOWED_HOSTS = ["localhost",
                  "0.0.0.0",
                  os.environ.get("ALLOWED_URL", "0.0.0.0")]
 
-CSRF_TRUSTED_ORIGINS = ['https://*.onrender.com']
+CSRF_TRUSTED_ORIGINS = ['https://*.withnoedge.tech']
 
 # Assets Management
 ASSETS_ROOT = os.getenv('ASSETS_ROOT', '/static/assets')
