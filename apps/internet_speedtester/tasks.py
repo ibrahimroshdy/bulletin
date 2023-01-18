@@ -49,5 +49,5 @@ def process_speedtest():
             logger.info(f"Server {item['name']} exists. {IE}")
 
 
-if __name__ == '__main__':
-    process_speedtest()
+# if __name__ == '__main__':
+#     process_speedtest()
