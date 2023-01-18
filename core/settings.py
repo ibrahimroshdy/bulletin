@@ -30,7 +30,7 @@ DEBUG = bool(os.environ.get("DEBUG", 'true').lower() == 'true')
 ALLOWED_HOSTS = ["localhost",
                  "127.0.0.1",
                  "0.0.0.0",
-                 os.environ.get("ALLOWED_URL", "bulletin-z3el.onrender.com")]
+                 os.environ.get("ALLOWED_URL", "0.0.0.0")]
 
 CSRF_TRUSTED_ORIGINS = ['https://*.onrender.com']
 
