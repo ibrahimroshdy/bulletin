@@ -12,7 +12,7 @@ from apps.social import tasks as social_tasks
 
 tl = timeloop.Timeloop()
 speedtester_interval_time = timedelta(minutes=15)
-social_interval_time = timedelta(minutes=1)
+social_interval_time = timedelta(hours=4)
 
 
 @tl.job(interval=speedtester_interval_time)
