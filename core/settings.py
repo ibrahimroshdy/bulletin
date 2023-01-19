@@ -161,6 +161,7 @@ STATICFILES_DIRS = (
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Social/Twitter Access Token Variables
+TWT_BEARER_TOKEN = os.environ.get("TWT_BEARER_TOKEN", "")
 TWT_CONSUMER_KEY = os.environ.get("TWT_CONSUMER_KEY", "")
 TWT_CONSUMER_SECRET = os.environ.get("TWT_CONSUMER_SECRET", "")
 TWT_ACCESS_KEY = os.environ.get("TWT_ACCESS_KEY", "")
