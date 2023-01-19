@@ -16,7 +16,6 @@ class AbstractTweepy:
         An abstract Tweepy class to organize the needed functionalies for Social app
     """
 
-    #TODO: load tokens from enviroment variables
     def __init__(self, consumer_key=settings.TWT_CONSUMER_KEY, consumer_secret=settings.TWT_CONSUMER_SECRET,
                  access_key=settings.TWT_ACCESS_KEY, access_secret=settings.TWT_ACCESS_SECRET,
                  bearer_token=settings.TWT_BEARER_TOKEN):
@@ -91,13 +90,14 @@ class AbstractTweepy:
             logger.error(f'WRONG ACCESS KEY/SECRET {BR}')
             return response
 
-    def create_random_tweet(self, text):
+    def create_tweet(self, text):
         """
-        Creates a tweet
+        TODO: Add attachments to the tweet creation
+        Creates a tweet text using tweepy client
         :return:
         """
         try:
-            self.tweepy_client.create_tweet(text=text)
+            # self.tweepy_client.create_tweet(text=text)
             return True, "True"
         except tweepy.errors.Unauthorized as UNA:
             logger.error(f'WRONG CONSUMER KEY/SECRET {UNA}')

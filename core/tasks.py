@@ -26,13 +26,13 @@ def internet_speedtests():
 
 
 @tl.job(interval=social_interval_time)
-def auto_tweeter_poster():
+def random_auto_tweeter_poster():
     """
     Timeloop job defention that runs every specified social_interval_time
     :return:
     """
     logger.info(f'Running autotweeter_poster @ interval of: {social_interval_time}')
-    social_tasks.auto_tweeter_process()
+    social_tasks.random_auto_tweeter_process()
 
 
 if __name__ == "__main__":

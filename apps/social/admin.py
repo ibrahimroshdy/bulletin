@@ -19,3 +19,10 @@ class TweetAdmin(ImportExportModelAdmin, ExportActionMixin):
     search_fields = ['tweet_text']
     date_hierarchy = 'tweet_date'
     readonly_fields = ['tweet_date']
+
+
+@admin.register(models.TweetSystemModel)
+class TweetSystemAdmin(ImportExportModelAdmin, ExportActionMixin):
+    list_display = ['status', 'message']
+    date_hierarchy = 'modified'
+    readonly_fields = ['status', 'message']

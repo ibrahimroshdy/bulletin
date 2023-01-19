@@ -9,12 +9,12 @@ from loguru import logger
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
 django.setup()
 
-from apps.social.models import TweetModel
+from apps.social.models import TweetModel, TweetSystemModel
 from apps.social.utils import AbstractTweepy
 
 
 @shared_task
-def auto_tweeter_process():
+def random_auto_tweeter_process():
     """
         A celery task that will be picked up.
         The task creates a tweepy instance which has access using Twitter API keys
@@ -22,10 +22,12 @@ def auto_tweeter_process():
         then tweets it and updates the DB
     """
 
+    system_status = TweetSystemModel.load()
+    system_status.set_error()
     at_twt = AbstractTweepy()
     tweet = TweetModel.random_tweet.get_random_tweet()
     if tweet is not None:
-        twt_bool, twt_response = at_twt.create_random_tweet(text=tweet.tweet_text)
+        twt_bool, twt_response = at_twt.create_tweet(text=tweet.tweet_text)
         if twt_bool:
             tweet.is_tweeted = True
             tweet.tweet_date = timezone.now()
@@ -35,3 +37,7 @@ def auto_tweeter_process():
             logger.error(f'{twt_response}')
     else:
         logger.warning('NO MORE TWEETS AVAILABLE IN DATABASE')
+
+
+if __name__ == '__main__':
+    random_auto_tweeter_process()

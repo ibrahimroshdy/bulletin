@@ -1,7 +1,7 @@
-import random
-
 from django.db import models
 from model_utils.models import TimeStampedModel
+
+from .helpers import SingletonModel, TweetManager, TweetSystemStatus
 
 
 # Create your models here.
@@ -19,22 +19,6 @@ class WoeidModel(TimeStampedModel):
         verbose_name_plural = 'Where On Earth IDs'
 
 
-# #TODO: possibility of making this avaliable
-# class TwitterKeysSecretsModel(TimeStampedModel):
-#     TWT_CONSUMER_KEY = models.CharField('TWT_CONSUMER_KEY', max_length=256)
-#     TWT_CONSUMER_SECRET = models.CharField('TWT_CONSUMER_SECRET', max_length=256)
-#     TWT_ACCESS_KEY = models.CharField('TWT_ACCESS_KEY', max_length=256)
-#     TWT_ACCESS_SECRET = models.CharField('TWT_ACCESS_KEY', max_length=256)
-
-class TweetManager(models.Manager):
-    def get_random_tweet(self):
-        items = list(super(TweetManager, self).filter(is_tweeted=False)[:10])
-        if len(items) != 0:
-            return random.choice(items)
-        else:
-            return None
-
-
 class TweetModel(TimeStampedModel):
     tweet_text = models.TextField('tweet_text', max_length=280)
     is_tweeted = models.BooleanField('tweeted', default=False)
@@ -47,3 +31,23 @@ class TweetModel(TimeStampedModel):
 
     def __str__(self):
         return f'{self.tweet_date}.{self.is_tweeted}'
+
+
+class TweetSystemModel(SingletonModel):
+    def __str__(self):
+        return f'{self.status}'
+
+    def set_error(self):
+        self.status = TweetSystemStatus.ERROR.name
+        self.save()
+
+    def set_maintenance(self):
+        self.status = TweetSystemStatus.MAINTENANCE.name
+        self.save()
+
+    def set_working(self):
+        self.status = TweetSystemStatus.WORKING.name
+        self.save()
+    class Meta:
+        verbose_name = 'Tweet System Status'
+        verbose_name_plural = 'Tweet System Status'
