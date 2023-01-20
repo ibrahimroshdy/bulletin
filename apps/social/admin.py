@@ -10,3 +10,19 @@ class WoeidAdmin(ImportExportModelAdmin, ExportActionMixin):
     list_filter = ['country', 'cc', 'active']
     search_fields = ['country', 'cc']
     date_hierarchy = 'created'
+
+
+@admin.register(models.TweetModel)
+class TweetAdmin(ImportExportModelAdmin, ExportActionMixin):
+    list_display = ['id', 'tweet_text', 'is_tweeted', 'tweet_date']
+    list_filter = ['is_tweeted']
+    search_fields = ['tweet_text']
+    date_hierarchy = 'tweet_date'
+    readonly_fields = ['tweet_date']
+
+
+@admin.register(models.TweetSystemModel)
+class TweetSystemAdmin(ImportExportModelAdmin, ExportActionMixin):
+    list_display = ['status', 'message']
+    date_hierarchy = 'modified'
+    readonly_fields = ['status', 'message']

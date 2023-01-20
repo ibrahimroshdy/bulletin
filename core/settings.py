@@ -161,7 +161,12 @@ STATICFILES_DIRS = (
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Social/Twitter Access Token Variables
+TWT_BEARER_TOKEN = os.environ.get("TWT_BEARER_TOKEN", "")
 TWT_CONSUMER_KEY = os.environ.get("TWT_CONSUMER_KEY", "")
 TWT_CONSUMER_SECRET = os.environ.get("TWT_CONSUMER_SECRET", "")
 TWT_ACCESS_KEY = os.environ.get("TWT_ACCESS_KEY", "")
 TWT_ACCESS_SECRET = os.environ.get("TWT_ACCESS_SECRET", "")
+
+# Tasks Interval Timing
+SPEEDTESTER_INTERVAL_TIME_MINS = os.environ.get("SPEEDTESTER_INTERVAL_TIME_MINS", 15)
+SOCIAL_INTERVAL_TIME_HRS = os.environ.get("SOCIAL_INTERVAL_TIME_HRS", 4)
