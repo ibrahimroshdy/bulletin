@@ -32,22 +32,30 @@ class TweetModel(TimeStampedModel):
     def __str__(self):
         return f'{self.tweet_date}.{self.is_tweeted}'
 
+    class Meta:
+        verbose_name = 'Tweet'
+        verbose_name_plural = 'Tweets'
+
 
 class TweetSystemModel(SingletonModel):
     def __str__(self):
         return f'{self.status}'
 
-    def set_error(self):
+    def set_error(self, message='NO MESSAGE ATTACHED'):
         self.status = TweetSystemStatus.ERROR.name
+        self.message = message
         self.save()
 
-    def set_maintenance(self):
+    def set_maintenance(self, message='NO MESSAGE ATTACHED'):
         self.status = TweetSystemStatus.MAINTENANCE.name
+        self.message = message
         self.save()
 
-    def set_working(self):
+    def set_working(self, message='NO MESSAGE ATTACHED'):
         self.status = TweetSystemStatus.WORKING.name
+        self.message = message
         self.save()
+
     class Meta:
         verbose_name = 'Tweet System Status'
         verbose_name_plural = 'Tweet System Status'

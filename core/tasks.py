@@ -5,14 +5,15 @@ import time
 from datetime import timedelta
 
 import timeloop
+from django.conf import settings
 from loguru import logger
 
 from apps.internet_speedtester import tasks as internet_speedtester_tasks
 from apps.social import tasks as social_tasks
 
 tl = timeloop.Timeloop()
-speedtester_interval_time = timedelta(minutes=15)
-social_interval_time = timedelta(hours=4)
+speedtester_interval_time = timedelta(minutes=settings.SPEEDTESTER_INTERVAL_TIME_MINS)
+social_interval_time = timedelta(hours=settings.SOCIAL_INTERVAL_TIME_HRS)
 
 
 @tl.job(interval=speedtester_interval_time)

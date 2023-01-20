@@ -97,7 +97,7 @@ class AbstractTweepy:
         :return:
         """
         try:
-            # self.tweepy_client.create_tweet(text=text)
+            self.tweepy_client.create_tweet(text=text)
             return True, "True"
         except tweepy.errors.Unauthorized as UNA:
             logger.error(f'WRONG CONSUMER KEY/SECRET {UNA}')
