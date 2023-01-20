@@ -29,6 +29,9 @@ class TweetModel(TimeStampedModel):
     # Random Tweet field by tweet manager
     random_tweet = TweetManager()
 
+    # Defulats objects manager
+    objects = models.Manager()
+
     def __str__(self):
         return f'{self.tweet_date}.{self.is_tweeted}'
 
