@@ -17,4 +17,4 @@ echo "yes" | python3 manage.py collectstatic
 
 python3 -m core.tasks & disown
 
-daphne -b 0.0.0.0 -p $PORT  -t 60 --application-close-timeout 60 core.asgi:application
+daphne -b 0.0.0.0 -p $PORT  -t 240 --application-close-timeout 240 core.asgi:application
