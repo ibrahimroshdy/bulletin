@@ -35,13 +35,13 @@ def random_auto_tweeter_poster():
     logger.info(f'Running autotweeter_poster @ interval of: {social_interval_time}')
     social_tasks.random_auto_tweeter_process()
 
-
-if __name__ == "__main__":
-    tl.start(block=True)
-
-    while True:
-        try:
-            time.sleep(1)
-        except KeyboardInterrupt:
-            tl.stop()
-            break
+#
+# if __name__ == "__main__":
+#     tl.start(block=True)
+#
+#     while True:
+#         try:
+#             time.sleep(1)
+#         except KeyboardInterrupt:
+#             tl.stop()
+#             break
