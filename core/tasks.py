@@ -8,7 +8,6 @@ import timeloop
 from django.conf import settings
 from loguru import logger
 
-from apps.internet_speedtester import tasks as internet_speedtester_tasks
 from apps.social import tasks as social_tasks
 
 tl = timeloop.Timeloop()
@@ -37,8 +36,11 @@ def random_auto_tweeter_poster():
 
 
 if __name__ == "__main__":
+    tl.start()
+
     while True:
         try:
-            tl.start()
-        except RuntimeError:
-            time.sleep(4000)
+            time.sleep(1)
+        except KeyboardInterrupt:
+            tl.stop()
+            break
