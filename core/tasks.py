@@ -41,4 +41,4 @@ if __name__ == "__main__":
         try:
             tl.start()
         except RuntimeError:
-            time.sleep(2000)
+            time.sleep(4000)
