@@ -47,5 +47,5 @@ def random_auto_tweeter_process():
         system_status.set_maintenance(message='NO MORE TWEETS AVAILABLE IN DATABASE')
 
 
-if __name__ == '__main__':
-    random_auto_tweeter_process()
+# if __name__ == '__main__':
+#     random_auto_tweeter_process()

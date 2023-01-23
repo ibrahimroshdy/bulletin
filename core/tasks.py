@@ -16,14 +16,14 @@ speedtester_interval_time = timedelta(minutes=settings.SPEEDTESTER_INTERVAL_TIME
 social_interval_time = timedelta(minutes=settings.SOCIAL_INTERVAL_TIME_MINS)
 
 
-@tl.job(interval=speedtester_interval_time)
-def internet_speedtests():
-    """
-    Timeloop job defention that runs every specified speedtester_interval_time
-    :return:
-    """
-    logger.info(f'Running internet_speedtest @ interval of: {speedtester_interval_time}')
-    internet_speedtester_tasks.process_speedtest()
+# @tl.job(interval=speedtester_interval_time)
+# def internet_speedtests():
+#     """
+#     Timeloop job defention that runs every specified speedtester_interval_time
+#     :return:
+#     """
+#     logger.info(f'Running internet_speedtest @ interval of: {speedtester_interval_time}')
+#     internet_speedtester_tasks.process_speedtest()
 
 
 @tl.job(interval=social_interval_time)
@@ -35,13 +35,13 @@ def random_auto_tweeter_poster():
     logger.info(f'Running autotweeter_poster @ interval of: {social_interval_time}')
     social_tasks.random_auto_tweeter_process()
 
-#
-# if __name__ == "__main__":
-#     tl.start(block=True)
-#
-#     while True:
-#         try:
-#             time.sleep(1)
-#         except KeyboardInterrupt:
-#             tl.stop()
-#             break
+
+if __name__ == "__main__":
+    tl.start()
+
+    while True:
+        try:
+            time.sleep(1)
+        except KeyboardInterrupt:
+            tl.stop()
+            break
