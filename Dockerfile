@@ -50,9 +50,11 @@ COPY apps apps
 
 # Entrypoint script
 COPY scripts/entrypoint.sh .
+COPY scripts/core_tasks.sh .
 
 # Make file executable
 RUN chmod +x entrypoint.sh
+RUN chmod +x core_tasks.sh
 
 # Entrypoint
 CMD ["/app/entrypoint.sh"]
