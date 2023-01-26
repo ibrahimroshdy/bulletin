@@ -6,6 +6,7 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models import Avg, Max, Min, StdDev
 from django.http import JsonResponse
 
+from core.messages import __OBJECT_NOT_FOUND
 from . import models
 
 
@@ -18,7 +19,7 @@ def get_latest_speedtest(request):
     try:
         speedtest_obj = models.SpeedtesterModel.objects.latest('created')
     except models.SpeedtesterModel.DoesNotExist as _:
-        return JsonResponse({"message": "NOT FOUND"}, safe=False, status=404)
+        return JsonResponse({"message": __OBJECT_NOT_FOUND}, safe=False, status=404)
 
     response = {
         'created': speedtest_obj.created,

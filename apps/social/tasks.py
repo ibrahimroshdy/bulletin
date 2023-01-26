@@ -4,7 +4,7 @@ import django
 from celery import shared_task
 from django.utils import timezone
 from loguru import logger
-
+from core import messages
 # Setup django to be able to access the settings file
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
 django.setup()
@@ -43,9 +43,9 @@ def random_auto_tweeter_process():
             system_status.set_error(message=twt_response)
 
     else:
-        logger.warning('NO MORE TWEETS AVAILABLE IN DATABASE')
-        system_status.set_maintenance(message='NO MORE TWEETS AVAILABLE IN DATABASE')
+        logger.warning(messages.__NO_TWEETS_AVAIABLE_IN_DB)
+        system_status.set_maintenance(message=messages.__NO_TWEETS_AVAIABLE_IN_DB)
 
 
-# if __name__ == '__main__':
-#     random_auto_tweeter_process()
+if __name__ == '__main__':
+    random_auto_tweeter_process()
