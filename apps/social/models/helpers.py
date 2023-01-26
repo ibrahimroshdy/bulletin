@@ -51,10 +51,10 @@ class TweetManager(models.Manager):
 
     def get_random_tweet(self):
         """
-        A method to filter through a model with given filters and get the last ten items
-        :return: A random choice of the list of 10 items
+        A method to filter through a model with given filters
+        :return: A random choice of the list
         """
-        items = list(super(TweetManager, self).filter(is_tweeted=False)[:10])
+        items = list(super(TweetManager, self).filter(is_tweeted=False))
         if len(items) != 0:
             return random.choice(items)
         else:
