@@ -16,14 +16,14 @@ speedtester_interval_time = timedelta(hours=settings.SPEEDTESTER_INTERVAL_TIME_H
 social_interval_time = timedelta(hours=settings.SOCIAL_INTERVAL_TIME_HRS)
 
 
-@tl.job(interval=speedtester_interval_time)
-def internet_speedtests():
-    """
-    Timeloop job defention that runs every specified speedtester_interval_time
-    :return:
-    """
-    logger.info(f'Running internet_speedtest @ interval of: {speedtester_interval_time}')
-    internet_speedtester_tasks.process_speedtest()
+# @tl.job(interval=speedtester_interval_time)
+# def internet_speedtests():
+#     """
+#     Timeloop job defention that runs every specified speedtester_interval_time
+#     :return:
+#     """
+#     logger.info(f'Running internet_speedtest @ interval of: {speedtester_interval_time}')
+#     internet_speedtester_tasks.process_speedtest()
 
 
 @tl.job(interval=social_interval_time)
