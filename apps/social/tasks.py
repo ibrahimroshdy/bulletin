@@ -21,7 +21,7 @@ def random_auto_tweeter_process():
         and randomly chooses a tweet from the database using a model manager in TweetModel()
         then tweets it and updates the DB
     """
-    system_status = TweetSystemModel.load()
+    system_status = TweetSystemModel.objects.get(pk=1)
 
     at_twt = AbstractTweepy()
     tweet = TweetModel.random_tweet.get_random_tweet()
@@ -47,5 +47,5 @@ def random_auto_tweeter_process():
         system_status.set_maintenance(message=messages.__NO_TWEETS_AVAIABLE_IN_DB)
 
 
-if __name__ == '__main__':
-    random_auto_tweeter_process()
+# if __name__ == '__main__':
+#     random_auto_tweeter_process()

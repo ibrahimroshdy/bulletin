@@ -34,14 +34,14 @@ class SingletonModel(TimeStampedModel):
         # To make it singleton
         abstract = True
 
-    @classmethod
-    def load(cls):
-        """
-        A load fucntion to ensure the existance of one object
-        :return: A single object of the singleton model with pk=1
-        """
-        obj, created = cls.objects.get_or_create(pk=1)
-        return obj
+    # @classmethod
+    # def load(cls):
+    #     """
+    #     A load fucntion to ensure the existance of one object
+    #     :return: A single object of the singleton model with pk=1
+    #     """
+    #     obj, created = cls.objects.get_or_create(pk=1)
+    #     return obj
 
 
 class TweetManager(models.Manager):
