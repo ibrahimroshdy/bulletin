@@ -23,7 +23,7 @@ def twt_get_tweeting_status(request):
     :param request:
     :return:
     """
-    twt_system_status = TweetSystemModel.objects.get(pk=1)
+    twt_system_status = TweetSystemModel.load()
     response = model_to_dict(twt_system_status)
     response.update({
         'created': twt_system_status.created,

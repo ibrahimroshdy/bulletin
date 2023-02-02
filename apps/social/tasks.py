@@ -25,8 +25,7 @@ def random_auto_tweeter_process():
         then tweets it and updates the DB
     """
     try:
-        system_status = TweetSystemModel.objects.get(pk=1)
-
+        system_status = TweetSystemModel.load()
         at_twt = AbstractTweepy()
         tweet = TweetModel.random_tweet.get_random_tweet()
 
