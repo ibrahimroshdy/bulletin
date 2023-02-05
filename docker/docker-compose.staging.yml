@@ -3,9 +3,7 @@ version: "3"
 services:
   # Bulletin Backend Service
   bulletin:
-    build:
-      context: ..
-      dockerfile: Dockerfile
+    image: bulletin
     container_name: bulletin
     restart: always
     ports:
