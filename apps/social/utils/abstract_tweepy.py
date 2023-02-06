@@ -92,9 +92,19 @@ class AbstractTweepy:
 
     def create_tweet(self, text):
         """
-        TODO: Add attachments to the tweet creation
-        Creates a tweet text using tweepy client
-        :return:
+        Creates a tweet using the tweepy client.
+
+        Parameters:
+            text (str): The text of the tweet.
+
+        Returns:
+            tuple: A tuple of two values:
+                success (bool): True if the tweet was successfully created, False otherwise.
+                message (str): A string message indicating the result of the tweet creation.
+
+        Raises:
+            tweepy.errors.Unauthorized: If the tweepy client is not authorized.
+            tweepy.errors.BadRequest: If the tweepy client has a bad request.
         """
         try:
             self.tweepy_client.create_tweet(text=text)
@@ -105,3 +115,35 @@ class AbstractTweepy:
         except tweepy.errors.BadRequest as BR:
             logger.error(f'WRONG ACCESS KEY/SECRET {BR}')
             return False, f'WRONG ACCESS KEY/SECRET {BR}'
+
+    def create_image_tweet(self, status, media_filename):
+        """
+        Creates a tweet image and uploads it to Twitter.
+
+        Arguments:
+            self -- object, the instance of the class
+            status -- str, the text content of the tweet
+            media_filename -- str, the path of the image file to be uploaded
+
+        Returns:
+            tuple -- a tuple containing two values:
+                     a boolean indicating success or failure of the operation,
+                     and a string with a message about the result
+
+
+        Raises:
+            tweepy.errors.Unauthorized: If the tweepy client is not authorized.
+            tweepy.errors.BadRequest: If the tweepy client has a bad request.
+        """
+        try:
+            media = self.tweepy_api.media_upload(filename=media_filename)
+            self.tweepy_api.update_status(status=status, media_ids=[media.media_id_string])
+            return True, "True"
+        except tweepy.errors.Unauthorized as UNA:
+            logger.error(f'WRONG CONSUMER KEY/SECRET {UNA}')
+            return False, f'WRONG CONSUMER KEY/SECRET {UNA}'
+        except tweepy.errors.BadRequest as BR:
+            logger.error(f'WRONG ACCESS KEY/SECRET {BR}')
+            return False, f'WRONG ACCESS KEY/SECRET {BR}'
+
+

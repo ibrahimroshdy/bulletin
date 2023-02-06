@@ -29,6 +29,8 @@ codecov = "^2.1.12"
 psycopg2-binary = "^2.9.3"
 tweepy = "^4.10.1"
 timeloop = "^1.0.2"
+Pillow = "^9.4.0"
+textwrap3 = "^0.9.2"
 
 [tool.poetry.dev-dependencies]
 

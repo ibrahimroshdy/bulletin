@@ -8,9 +8,9 @@ from loguru import logger
 from core import messages
 
 # Setup django to be able to access the settings file
+
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
 django.setup()
-
 from apps.social.models import TweetModel, TweetSystemModel
 from apps.social.utils import AbstractTweepy
 from psycopg2 import OperationalError
@@ -18,11 +18,30 @@ from psycopg2 import OperationalError
 
 @shared_task
 def random_auto_tweeter_process():
+    # TODO: Optimize methods and function calling
     """
-        A celery task that will be picked up.
-        The task creates a tweepy instance which has access using Twitter API keys
-        and randomly chooses a tweet from the database using a model manager in TweetModel()
-        then tweets it and updates the DB
+    This function performs a process to tweet a randomly selected tweet using the Twitter API.
+
+    Summary:
+    The function creates an instance of the `AbstractTweepy` class, which has access to the Twitter API using
+    the API keys. It then selects a random tweet from the database using the `get_random_tweet` function of
+    `TweetModel`. If a tweet is found, the function tweets it and updates the tweet's information in the database.
+    If the tweet posting is unsuccessful, an error message is logged. If no tweets are found in the database,
+    a warning message is logged.
+
+    Process:
+    1. Load the `TweetSystemModel` to get the system status.
+    2. Create an instance of the `AbstractTweepy` class.
+    3. Select a random tweet from the database using the `get_random_tweet` function of `TweetModel`.
+    4. If a tweet is found:
+        a. Tweet the text of the tweet using the `create_tweet` function of the `AbstractTweepy` instance.
+        b. If the tweet posting is successful, update the tweet's information in the database.
+           Log a success message.
+        c. If the tweet posting is unsuccessful, log an error message and update the system status.
+    5. If no tweets are found in the database, log a warning message and update the system status.
+
+    Raises:
+    OperationalError: If there is an error in the database.
     """
     try:
         system_status = TweetSystemModel.load()
@@ -50,6 +69,3 @@ def random_auto_tweeter_process():
             system_status.set_maintenance(message=messages.__NO_TWEETS_AVAIABLE_IN_DB)
     except OperationalError as OE:
         logger.error(f'OperationalError DB: {OE}')
-
-# if __name__ == '__main__':
-#     random_auto_tweeter_process()
