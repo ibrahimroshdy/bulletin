@@ -151,6 +151,12 @@ USE_TZ = False
 STATIC_ROOT = os.path.join(CORE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
+# Base url to serve media files
+MEDIA_URL = '/media/'
+
+# Path where media is stored
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
 # Extra places for collectstatic to find static files.
 STATICFILES_DIRS = (
     os.path.join(CORE_DIR, 'apps/static'),
@@ -170,4 +176,5 @@ TWT_ACCESS_SECRET = os.environ.get("TWT_ACCESS_SECRET", "")
 
 # Tasks Interval Timing
 SPEEDTESTER_INTERVAL_TIME_HRS = os.environ.get("SPEEDTESTER_INTERVAL_TIME_HRS", 4)
-SOCIAL_INTERVAL_TIME_MINS = os.environ.get("SOCIAL_INTERVAL_TIME_HRS", 60)
+TEXT_TWEET_INTERVAL_TIME_MINS = os.environ.get("TEXT_TWEET_INTERVAL_TIME_MINS", 60)
+IMAGE_TWEET_INTERVAL_TIME_DAYS = os.environ.get("IMAGE_TWEET_INTERVAL_TIME_DAYS", 1)
