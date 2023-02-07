@@ -87,4 +87,4 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
-          tag: ${{ github.ref_name }}
+          tags: ${{ github.ref_name }}
