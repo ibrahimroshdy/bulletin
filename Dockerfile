@@ -1,7 +1,7 @@
 # Multistage build to optimize caching
 
 # 1. Base image as python for system requirment (Installing requirements for debian environment)
-FROM --platform=linux/amd64 --platform=linux/arm64 --platform=linux/arm/v7 --platform=linux/arm/v8 python:3.9-slim as base
+FROM  python:3.9-slim as base
 LABEL org.opencontainers.image.source https://github.com/ibrahimroshdy/bulletin
 RUN apt-get update \
 && apt-get install -y --no-install-recommends git libpq-dev\
