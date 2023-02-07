@@ -24,9 +24,9 @@ services:
     command: postgres -c 'max_connections=1000'
     restart: always
     environment:
-      POSTGRES_DB: refresher
-      POSTGRES_PASSWORD: refresher
-      POSTGRES_USER: refresher
+      POSTGRES_DB: bulletin
+      POSTGRES_PASSWORD: bulletin
+      POSTGRES_USER: bulletin
     ports:
       - "127.0.0.1:5432:5432"
     volumes:
