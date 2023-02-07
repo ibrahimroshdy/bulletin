@@ -15,6 +15,4 @@ echo "from django.contrib.auth import get_user_model; User = get_user_model(); p
 echo "Collecting static.."
 echo "yes" | python3 manage.py collectstatic
 
-python3 -m core.tasks & disown
-
-daphne -b 0.0.0.0 -p $PORT  -t 60 --application-close-timeout 60 core.asgi:application
+daphne -b 0.0.0.0 -p 8000  -t 240 --application-close-timeout 240 core.asgi:application

@@ -30,6 +30,7 @@ DEBUG = bool(os.environ.get("DEBUG", 'true').lower() == 'true')
 ALLOWED_HOSTS = ["localhost",
                  "127.0.0.1",
                  "0.0.0.0",
+                 "bulletin-z3el.onrender.com",
                  os.environ.get("ALLOWED_URL", "0.0.0.0")]
 
 CSRF_TRUSTED_ORIGINS = ['https://*.withnoedge.tech']
@@ -150,6 +151,12 @@ USE_TZ = False
 STATIC_ROOT = os.path.join(CORE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
+# Base url to serve media files
+MEDIA_URL = '/media/'
+
+# Path where media is stored
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
 # Extra places for collectstatic to find static files.
 STATICFILES_DIRS = (
     os.path.join(CORE_DIR, 'apps/static'),
@@ -161,7 +168,13 @@ STATICFILES_DIRS = (
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Social/Twitter Access Token Variables
+TWT_BEARER_TOKEN = os.environ.get("TWT_BEARER_TOKEN", "")
 TWT_CONSUMER_KEY = os.environ.get("TWT_CONSUMER_KEY", "")
 TWT_CONSUMER_SECRET = os.environ.get("TWT_CONSUMER_SECRET", "")
 TWT_ACCESS_KEY = os.environ.get("TWT_ACCESS_KEY", "")
 TWT_ACCESS_SECRET = os.environ.get("TWT_ACCESS_SECRET", "")
+
+# Tasks Interval Timing
+SPEEDTESTER_INTERVAL_TIME_HRS = os.environ.get("SPEEDTESTER_INTERVAL_TIME_HRS", 4)
+TEXT_TWEET_INTERVAL_TIME_MINS = os.environ.get("TEXT_TWEET_INTERVAL_TIME_MINS", 60)
+IMAGE_TWEET_INTERVAL_TIME_DAYS = os.environ.get("IMAGE_TWEET_INTERVAL_TIME_DAYS", 1)

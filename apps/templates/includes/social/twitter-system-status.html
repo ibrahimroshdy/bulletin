@@ -1,0 +1,67 @@
+<div class="card card-body">
+
+    <div class="card-header">
+        <h5 class="card-category">Social</h5>
+        <h3 class="card-title"><i class="tim-icons icon-settings-gear-63 text-primary"></i> Twitter System Status</h3>
+    </div>
+
+    <div class="card-body">
+        <div id="twt-system-status">
+            <div class="alert alert-primary" role="alert">
+            </div>
+        </div>
+
+    </div>
+
+    <div class="card-footer">
+    </div>
+
+</div>
+
+
+<script type="text/javascript">
+    $.ajax({
+        url: {% url 'twt_get_tweeting_status' %},
+        type: "GET",
+        dataType: "json",
+        success: (data) => {
+            console.log(data)
+            var createdDate = new Date(data.modified);
+            var options = {year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'};
+            var date_modified = createdDate.toLocaleString("en-US", options);
+
+            if (data.status == 'WORKING') {
+                document.getElementById("twt-system-status").innerHTML = '<div class="alert alert-success" role="alert">' +
+                    '<span id="twt-system-status" class="badge badge-success">' +
+                    data.status +
+                    '</span><br><br><strong>'
+                    + data.message + '&nbsp&nbsp&nbsp</strong>' + date_modified +
+                    '</div>';
+            } else if (data.status == 'ERROR') {
+                document.getElementById("twt-system-status").innerHTML = '<div class="alert alert-danger" role="alert">' +
+                    '<span id="twt-system-status" class="badge badge-danger">' +
+                    data.status +
+                    '</span><br><br><strong>'
+                    + data.message + '&nbsp&nbsp&nbsp</strong>' + date_modified +
+                    '</div>';
+            } else if (data.status == 'MAINTENANCE') {
+                document.getElementById("twt-system-status").innerHTML = '<div class="alert alert-warning" role="alert">' +
+                    '<span id="twt-system-status" class="badge badge-warning">' +
+                    data.status +
+                    '</span><br><br><strong>'
+                    + data.message + '&nbsp&nbsp&nbsp</strong>' + date_modified +
+                    '</div>';
+            } else {
+                document.getElementById("twt-system-status").innerHTML = '<div class="alert alert-default" role="alert">' +
+                    '<span id="twt-system-status" class="badge badge-default">' +
+                    data.status +
+                    '</span><br><br><strong>'
+                    + data.message + '&nbsp&nbsp&nbsp</strong>' + date_modified +
+                    '</div>';
+            }
+        },
+        error: (error) => {
+            console.log(error);
+        }
+    });
+</script>
