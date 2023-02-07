@@ -35,9 +35,9 @@ jobs:
           file:
             Dockerfile
 
-  build_push_arm64:
-    runs-on: arm64
-    name: build docker arm64
+  build_push_raspberry-pi:
+    runs-on: raspberry-pi
+    name: build docker raspberry-pi
     steps:
       ##########   CHECK OUT REPO AND PRINT REPO INFO #######
       - name: Checkout
@@ -62,7 +62,7 @@ jobs:
           repository:
             ${{ github.repository }}
           tag:
-            ${{ github.ref_name }}_arm64
+            ${{ github.ref_name }}_raspberry_pi
           file:
             Dockerfile
 
