@@ -4,9 +4,9 @@ name: Bulletin CI
 on: [ push ]
 
 jobs:
-  build_push:
+  build_push_x86:
     runs-on: ubuntu-latest
-    name: build docker
+    name: build docker ubuntu
     steps:
       ##########   CHECK OUT REPO AND PRINT REPO INFO #######
       - name: Checkout
@@ -34,6 +34,38 @@ jobs:
             ${{ github.ref_name }}
           file:
             Dockerfile
+
+  build_push_arm64:
+    runs-on: arm64
+    name: build docker arm64
+    steps:
+      ##########   CHECK OUT REPO AND PRINT REPO INFO #######
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Intro to job runner
+        run: |
+          echo "job runner details "
+          echo "Event: ${{ github.event_name }}"
+          echo "os: ${{ runner.os }} server."
+          echo "Repository: ${{ github.repository }}:${{ github.ref_name }}."
+          ls ${{ github.workspace }}
+      ######### DOCKER BUILD AND PUSH CUSTOM ACTION #############
+      - name: Docker Build and Push
+        uses: ./.github/actions/docker-build-push-image
+        with:
+          username:
+            ${{ github.REPOSITORY_OWNER }}
+          password:
+            ${{ secrets.pta }}
+          registry:
+            ghcr.io
+          repository:
+            ${{ github.repository }}
+          tag:
+            ${{ github.ref_name }}_arm64
+          file:
+            Dockerfile
+
   test:
     needs: build_push
     runs-on: ubuntu-latest

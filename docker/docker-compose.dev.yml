@@ -18,11 +18,11 @@ services:
     volumes:
       - media:/app/media
 
-  coretasks:
+  bulletincoretasks:
     build:
       context: ..
       dockerfile: Dockerfile
-    container_name: coretasks
+    container_name: bulletincoretasks
     restart: always
     command: /bin/bash -c "python -m core.tasks"
     environment:
