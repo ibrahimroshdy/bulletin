@@ -4,9 +4,9 @@ name: Bulletin CI
 on: [ push ]
 
 jobs:
-  build_push_x86:
+  build_push_x86_arm64:
     runs-on: ubuntu-20.04
-    name: build docker ubuntu
+    name: build docker ubuntu-20.04
     steps:
       ##########   CHECK OUT REPO AND PRINT REPO INFO #######
       - name: Checkout
@@ -36,7 +36,7 @@ jobs:
             Dockerfile
 
   test:
-    needs: build_push_x86
+    needs: build_push_x86_arm64
     runs-on: ubuntu-20.04
     name: test docker
     steps:
