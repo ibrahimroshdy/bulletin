@@ -7,7 +7,6 @@ jobs:
   build_push_x86_arm64:
     runs-on: ubuntu-20.04
     name: build docker ubuntu-20.04
-    DOCKER_CLI_EXPERIMENTAL: enabled
     steps:
       ##########   CHECK OUT REPO AND PRINT REPO INFO #######
       - name: Checkout
