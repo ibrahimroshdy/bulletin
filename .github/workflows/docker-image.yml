@@ -5,7 +5,7 @@ on: [ push ]
 
 jobs:
   build_push_x86:
-    runs-on: ubuntu-jammy
+    runs-on: ubuntu-20.04
     name: build docker ubuntu
     steps:
       ##########   CHECK OUT REPO AND PRINT REPO INFO #######
@@ -37,7 +37,7 @@ jobs:
 
   test:
     needs: build_push_x86
-    runs-on: ubuntu-jammy
+    runs-on: ubuntu-20.04
     name: test docker
     steps:
       ##########    CHECK OUT REPO AND PRINT REPO INFO #######
