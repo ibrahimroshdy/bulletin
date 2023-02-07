@@ -67,7 +67,7 @@ jobs:
             Dockerfile
 
   test:
-    needs: build_push
+    needs: build_push_x86
     runs-on: ubuntu-latest
     name: test docker
     steps:
