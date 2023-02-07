@@ -16,6 +16,19 @@ services:
     volumes:
       - media:/app/media
 
+  coretasks:
+    image: bulletin
+    container_name: coretasks
+    restart: always
+    command: /bin/bash -c "python -m core.tasks"
+    environment:
+      - SECRET_KEY=aahckjadf^^^changeinproduction^^ajshjdjkhaskjdh
+      - DEBUG=True
+      - DATABASE_URL=postgres://bulletin:bulletin@postgres:5432/bulletin
+    volumes:
+      - media:/app/media
+
+
   postgres:
     image: postgres:14
     container_name: postgres
