@@ -32,7 +32,7 @@ ALLOWED_HOSTS = ["localhost",
                  "0.0.0.0",
                  os.environ.get("ALLOWED_URL", "0.0.0.0")]
 
-CSRF_TRUSTED_ORIGINS = ['https://*.withnoedge.tech', os.environ.get("ALLOWED_CSRF", "127.0.0.1")]
+CSRF_TRUSTED_ORIGINS = ['https://*.withnoedge.tech', os.environ.get("ALLOWED_CSRF", "http://127.0.0.1")]
 
 # Assets Management
 ASSETS_ROOT = os.getenv('ASSETS_ROOT', '/static/assets')
