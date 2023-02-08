@@ -30,10 +30,9 @@ DEBUG = bool(os.environ.get("DEBUG", 'true').lower() == 'true')
 ALLOWED_HOSTS = ["localhost",
                  "127.0.0.1",
                  "0.0.0.0",
-                 "bulletin-z3el.onrender.com",
                  os.environ.get("ALLOWED_URL", "0.0.0.0")]
 
-CSRF_TRUSTED_ORIGINS = ['https://*.withnoedge.tech']
+CSRF_TRUSTED_ORIGINS = ['https://*.withnoedge.tech', os.environ.get("ALLOWED_CSRF", "127.0.0.1")]
 
 # Assets Management
 ASSETS_ROOT = os.getenv('ASSETS_ROOT', '/static/assets')

@@ -17,6 +17,8 @@ services:
       - DATABASE_URL=postgres://bulletin:bulletin@postgres:5432/bulletin
     volumes:
       - media:/app/media
+    depends_on:
+      - postgres
 
   bulletincoretasks:
     build:
@@ -31,7 +33,8 @@ services:
       - DATABASE_URL=postgres://bulletin:bulletin@postgres:5432/bulletin
     volumes:
       - media:/app/media
-
+    depends_on:
+      - postgres
 
   postgres:
     image: postgres:14

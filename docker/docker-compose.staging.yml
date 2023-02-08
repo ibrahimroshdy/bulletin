@@ -14,8 +14,11 @@ services:
       - DEBUG=True
       - DATABASE_URL=postgres://bulletin:bulletin@postgres:5432/bulletin
       - ALLOWED_URL=192.168.1.2
+      - ALLOWED_CSRF=192.168.1.2
     volumes:
       - media:/app/media
+    depends_on:
+      - postgres
 
   bulletincoretasks:
     image: bulletin
@@ -28,6 +31,8 @@ services:
       - DATABASE_URL=postgres://bulletin:bulletin@postgres:5432/bulletin
     volumes:
       - media:/app/media
+    depends_on:
+      - postgres
 
   postgres:
     image: postgres:14
