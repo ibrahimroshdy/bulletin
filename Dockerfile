@@ -4,7 +4,7 @@
 FROM  python:3.9-slim as base
 LABEL org.opencontainers.image.source https://github.com/ibrahimroshdy/bulletin
 RUN apt-get update \
-&& apt-get install -y --no-install-recommends git libpq-dev\
+&& apt-get install -y --no-install-recommends git gcc libpq-dev\
 && apt-get purge -y --auto-remove \
 && rm -rf /var/lib/apt/lists/*
 #COPY .git /app/.git
