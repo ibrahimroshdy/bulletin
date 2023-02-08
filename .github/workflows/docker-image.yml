@@ -4,9 +4,9 @@ name: Bulletin CI
 on: [ push ]
 
 jobs:
-  build_push_x86_arm64:
-    runs-on: ubuntu-20.04
-    name: build docker ubuntu-20.04
+  build-for-x86:
+    runs-on: ubuntu-latest
+    name: build docker on ubuntu-latest for x86
     steps:
       ##########   CHECK OUT REPO AND PRINT REPO INFO #######
       - name: Checkout
@@ -36,7 +36,7 @@ jobs:
             Dockerfile
 
   test:
-    needs: build_push_x86_arm64
+    needs: build-for-x86
     runs-on: ubuntu-20.04
     name: test docker
     steps:
@@ -48,7 +48,7 @@ jobs:
         uses: ./.github/actions/docker-pull-image
         with:
           username:
-            ${{ github.REPOSITORY_OWNER }}
+            ${{ github.repository_owner }}
           password:
             ${{ secrets.pta }}
           registry:
@@ -66,7 +66,7 @@ jobs:
           ghcr.io/${{ github.repository }}:${{ github.ref_name }}
           /bin/bash -c "coverage run manage.py test apps && codecov --token=${{ secrets.codecov_token }}"
 
-  docker:
+  build-for-arm64:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -85,6 +85,6 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          platforms: linux/arm64 # linux/amd64, linux/arm64, linux/arm/v7, linux/arm/v8
+          platforms: linux/amd64, linux/arm64, linux/arm/v7, linux/arm/v8
           push: true
           tags: ghcr.io/${{ github.repository }}:${{ github.ref_name }}_arm64
