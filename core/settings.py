@@ -38,7 +38,6 @@ CSRF_TRUSTED_ORIGINS = ['https://*.withnoedge.tech', os.environ.get("ALLOWED_CSR
 ASSETS_ROOT = os.getenv('ASSETS_ROOT', '/static/assets')
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
