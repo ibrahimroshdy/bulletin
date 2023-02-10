@@ -59,7 +59,7 @@ jobs:
           ghcr.io/${{ github.repository }}:${{ github.ref_name }}
           /bin/bash -c "coverage run manage.py test apps"
       - name: Run tests
-        run: docker run ghcr.io/${{ github.repository }}:${{ github.ref_name }} /bin/bash -c "coverage run manage.py test apps && coverage xml manage.py test apps"
+        run: docker run ghcr.io/${{ github.repository }}:${{ github.ref_name }} /bin/bash -c "coverage run manage.py test apps && coverage xml --data-file=.coverage"
       - name: CodeCov upload
         uses: codecov/codecov-action@v3
         with:
