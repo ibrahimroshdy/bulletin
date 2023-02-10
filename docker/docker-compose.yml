@@ -22,7 +22,7 @@ services:
     image: bulletin
     container_name: bulletincoretasks
     restart: always
-    command: /bin/bash -c "python -m core.tasks"
+    command: /bin/bash -c "python manage.py collectstatic && python -m core.tasks"
     environment:
       - SECRET_KEY=aahckjadf^^^changeinproduction^^ajshjdjkhaskjdh
       - DEBUG=True
