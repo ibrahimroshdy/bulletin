@@ -4,70 +4,9 @@ name: Bulletin CI
 on: [ push ]
 
 jobs:
-  build_push_x86_arm64:
-    runs-on: ubuntu-20.04
-    name: build docker ubuntu-20.04
-    steps:
-      ##########   CHECK OUT REPO AND PRINT REPO INFO #######
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Intro to job runner
-        run: |
-          echo "job runner details "
-          echo "Event: ${{ github.event_name }}"
-          echo "os: ${{ runner.os }} server."
-          echo "Repository: ${{ github.repository }}:${{ github.ref_name }}."
-          ls ${{ github.workspace }}
-      ######### DOCKER BUILD AND PUSH CUSTOM ACTION #############
-      - name: Docker Build and Push
-        uses: ./.github/actions/docker-build-push-image
-        with:
-          username:
-            ${{ github.REPOSITORY_OWNER }}
-          password:
-            ${{ secrets.pta }}
-          registry:
-            ghcr.io
-          repository:
-            ${{ github.repository }}
-          tag:
-            ${{ github.ref_name }}
-          file:
-            Dockerfile
-
-  test:
-    needs: build_push_x86_arm64
-    runs-on: ubuntu-20.04
-    name: test docker
-    steps:
-      ##########    CHECK OUT REPO AND PRINT REPO INFO #######
-      - name: Checkout
-        uses: actions/checkout@v3
-      ######### DOCKER LOGIN AND PULL CUSTOM ACTION #############
-      - name: Docker Login and Pull
-        uses: ./.github/actions/docker-pull-image
-        with:
-          username:
-            ${{ github.REPOSITORY_OWNER }}
-          password:
-            ${{ secrets.pta }}
-          registry:
-            ghcr.io
-          repository:
-            ${{ github.repository }}
-          tag:
-            ${{ github.ref_name }}
-      - name: Run tests
-        run: docker run
-          -e TWT_CONSUMER_KEY="${{ secrets.TWT_CONSUMER_KEY }}"
-          -e TWT_CONSUMER_SECRET="${{ secrets.TWT_CONSUMER_SECRET }}"
-          -e TWT_ACCESS_KEY="${{ secrets.TWT_ACCESS_KEY }}"
-          -e TWT_ACCESS_SECRET="${{ secrets.TWT_ACCESS_SECRET }}"
-          ghcr.io/${{ github.repository }}:${{ github.ref_name }}
-          /bin/bash -c "coverage run manage.py test apps && codecov --token=${{ secrets.codecov_token }}"
-
-  docker:
+  build:
     runs-on: ubuntu-latest
+    name: build for amd64/arm64
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -85,6 +24,37 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          platforms: linux/arm64 # linux/amd64, linux/arm64, linux/arm/v7, linux/arm/v8
+          platforms: linux/amd64, linux/arm64
           push: true
-          tags: ghcr.io/${{ github.repository }}:${{ github.ref_name }}_arm64
+          tags: ghcr.io/${{ github.repository }}:${{ github.ref_name }}
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    name: run unit tests
+    steps:
+      ##########    CHECK OUT REPO AND PRINT REPO INFO #######
+      - name: Checkout
+        uses: actions/checkout@v3
+      ######### DOCKER LOGIN AND PULL CUSTOM ACTION #############
+      - name: Docker Login and Pull
+        uses: ./.github/actions/docker-pull-image
+        with:
+          username:
+            ${{ github.repository_owner }}
+          password:
+            ${{ secrets.pta }}
+          registry:
+            ghcr.io
+          repository:
+            ${{ github.repository }}
+          tag:
+            ${{ github.ref_name }}
+      - name: Run tests
+        run: docker run
+          -e TWT_CONSUMER_KEY="${{ secrets.TWT_CONSUMER_KEY }}"
+          -e TWT_CONSUMER_SECRET="${{ secrets.TWT_CONSUMER_SECRET }}"
+          -e TWT_ACCESS_KEY="${{ secrets.TWT_ACCESS_KEY }}"
+          -e TWT_ACCESS_SECRET="${{ secrets.TWT_ACCESS_SECRET }}"
+          ghcr.io/${{ github.repository }}:${{ github.ref_name }}
+          /bin/bash -c "coverage run manage.py test apps && codecov --token=${{ secrets.codecov_token }} --commit=${{ github.GITHUB_SHA }}"

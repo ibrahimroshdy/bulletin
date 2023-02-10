@@ -3,11 +3,11 @@
 # 1. Base image as python for system requirment (Installing requirements for debian environment)
 FROM  python:3.9-slim as base
 LABEL org.opencontainers.image.source https://github.com/ibrahimroshdy/bulletin
+LABEL org.opencontainers.image.description "Bulletin's built docker container for multi-arch platforms. Supports  linux/amd64 and linux/arm64."
 RUN apt-get update \
 && apt-get install -y --no-install-recommends git gcc libpq-dev python3.9-dev\
 && apt-get purge -y --auto-remove \
 && rm -rf /var/lib/apt/lists/*
-#COPY .git /app/.git
 
 # 2. Python packages and virtual env setup
 FROM base as sys_setup
