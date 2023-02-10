@@ -57,4 +57,4 @@ jobs:
           -e TWT_ACCESS_KEY="${{ secrets.TWT_ACCESS_KEY }}"
           -e TWT_ACCESS_SECRET="${{ secrets.TWT_ACCESS_SECRET }}"
           ghcr.io/${{ github.repository }}:${{ github.ref_name }}
-          /bin/bash -c "coverage run manage.py test apps && codecov --token=${{ secrets.codecov_token }}"
+          /bin/bash -c "coverage run manage.py test apps && codecov --token=${{ secrets.codecov_token }} --commit=${{ github.GITHUB_SHA }}"
