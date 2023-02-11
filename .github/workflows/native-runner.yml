@@ -9,7 +9,7 @@ jobs:
     name: test native
     steps:
       ##########   CHECK OUT REPO AND PRINT REPO INFO #######
-      - name: Checkout
+      - name: Checkout repo
         uses: actions/checkout@v3
       - name: Intro to job runner
         run: |
@@ -23,14 +23,14 @@ jobs:
           pip install pyfiglet
           pip install -r requirements.txt
           pyfiglet TEST LOCAL
-      - name: Run test local
+      - name: Run test local in container
         run: |
           export TWT_CONSUMER_KEY="${{ secrets.TWT_CONSUMER_KEY }}"
           export TWT_CONSUMER_SECRET="${{ secrets.TWT_CONSUMER_SECRET }}"
           export TWT_ACCESS_KEY="${{ secrets.TWT_ACCESS_KEY }}"
           export TWT_ACCESS_SECRET="${{ secrets.TWT_ACCESS_SECRET }}"
           coverage run manage.py test apps && coverage xml --data-file=.coverage
-      - name: codecov
+      - name: Upload to CodeCov
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.codecov_token }} # not required for public repos
