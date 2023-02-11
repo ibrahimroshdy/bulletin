@@ -58,5 +58,3 @@ jobs:
           -e TWT_ACCESS_SECRET="${{ secrets.TWT_ACCESS_SECRET }}"
           ghcr.io/${{ github.repository }}:${{ github.ref_name }}
           /bin/bash -c "coverage run manage.py test apps"
-      - name: Run tests
-        run: docker run ghcr.io/${{ github.repository }}:${{ github.ref_name }} /bin/bash -c "coverage run manage.py test apps && coverage xml --data-file=.coverage"

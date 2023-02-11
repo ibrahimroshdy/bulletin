@@ -18,11 +18,13 @@ jobs:
           echo "os: ${{ runner.os }} server."
           echo "Repository: ${{ github.repository }}:${{ github.ref_name }}."
           ls ${{ github.workspace }}
+
       - name: Install poetry and python packages
         run: |
           pip install pyfiglet
           pip install -r requirements.txt
-          pyfiglet TEST LOCAL
+          pyfiglet Packges Downloaded
+
       - name: Run test local in container
         run: |
           export TWT_CONSUMER_KEY="${{ secrets.TWT_CONSUMER_KEY }}"
@@ -30,6 +32,7 @@ jobs:
           export TWT_ACCESS_KEY="${{ secrets.TWT_ACCESS_KEY }}"
           export TWT_ACCESS_SECRET="${{ secrets.TWT_ACCESS_SECRET }}"
           coverage run manage.py test apps && coverage xml --data-file=.coverage
+
       - name: Upload to CodeCov
         uses: codecov/codecov-action@v3
         with:
