@@ -1,4 +1,4 @@
-# Github workflow runner instructions using cutomized actions
+# Github workflow runner instructions actions
 name: Bulletin CI — Native
 
 on: [ push ]
