@@ -26,7 +26,6 @@ jobs:
           export TWT_CONSUMER_SECRET="${{ secrets.TWT_CONSUMER_SECRET }}"
           export TWT_ACCESS_KEY="${{ secrets.TWT_ACCESS_KEY }}"
           export TWT_ACCESS_SECRET="${{ secrets.TWT_ACCESS_SECRET }}"
-          ghcr.io/${{ github.repository }}:${{ github.ref_name }}
           pyfiglet TEST LOCAL
       - name: Run test local
         run: coverage run manage.py test apps && coverage xml --data-file=.coverage
