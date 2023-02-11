@@ -1,0 +1,35 @@
+# Github workflow runner instructions using cutomized actions
+name: Refresher CI — Native
+
+on: [ push ]
+
+jobs:
+  test-native:
+    runs-on: ubuntu-latest
+    name: test native
+    steps:
+      ##########   CHECK OUT REPO AND PRINT REPO INFO #######
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Intro to job runner
+        run: |
+          echo "job runner details "
+          echo "Event: ${{ github.event_name }}"
+          echo "os: ${{ runner.os }} server."
+          echo "Repository: ${{ github.repository }}:${{ github.ref_name }}."
+          ls ${{ github.workspace }}
+      - name: Install poetry and python packages
+        run: |
+          pip install pyfiglet
+          pip install -r requirements.txt
+          pyfiglet TEST LOCAL
+      - name: Run test local
+        run: coverage run manage.py test apps && coverage xml --data-file=.coverage
+      - name: codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.codecov_token }} # not required for public repos
+          files: ./coverage.xml
+          name: codecov-umbrella # optional
+          fail_ci_if_error: true # optional (default = false)
+          verbose: true # optional (default = false)
