@@ -1,5 +1,5 @@
 # Github workflow runner instructions using cutomized actions
-name: Refresher CI — Native
+name: Bulletin CI — Native
 
 on: [ push ]
 
