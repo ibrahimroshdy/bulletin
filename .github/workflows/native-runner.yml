@@ -22,13 +22,14 @@ jobs:
         run: |
           pip install pyfiglet
           pip install -r requirements.txt
+          pyfiglet TEST LOCAL
+      - name: Run test local
+        run: |
           export TWT_CONSUMER_KEY="${{ secrets.TWT_CONSUMER_KEY }}"
           export TWT_CONSUMER_SECRET="${{ secrets.TWT_CONSUMER_SECRET }}"
           export TWT_ACCESS_KEY="${{ secrets.TWT_ACCESS_KEY }}"
           export TWT_ACCESS_SECRET="${{ secrets.TWT_ACCESS_SECRET }}"
-          pyfiglet TEST LOCAL
-      - name: Run test local
-        run: coverage run manage.py test apps && coverage xml --data-file=.coverage
+          coverage run manage.py test apps && coverage xml --data-file=.coverage
       - name: codecov
         uses: codecov/codecov-action@v3
         with:
