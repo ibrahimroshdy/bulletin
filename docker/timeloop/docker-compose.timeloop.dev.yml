@@ -1,0 +1,62 @@
+version: "3"
+
+services:
+  # Bulletin Backend Service
+  bulletin:
+    build:
+      context: ../..
+      dockerfile: Dockerfile
+    container_name: bulletin
+    restart: always
+    ports:
+      - 8000:8000
+    environment:
+      - PORT=8000
+      - SECRET_KEY=aahckjadf^^^changeinproduction^^ajshjdjkhaskjdh
+      - DEBUG=True
+      - DATABASE_URL=postgres://bulletin:bulletin@postgres:5432/bulletin
+    volumes:
+      - media:/app/media
+    depends_on:
+      - postgres
+
+  bulletincoretasks:
+    build:
+      context: ../..
+      dockerfile: Dockerfile
+    container_name: bulletincoretasks
+    restart: always
+    command: /bin/bash -c "python manage.py collectstatic && python -m core.tasks"
+    environment:
+      - SECRET_KEY=aahckjadf^^^changeinproduction^^ajshjdjkhaskjdh
+      - DEBUG=True
+      - DATABASE_URL=postgres://bulletin:bulletin@postgres:5432/bulletin
+      - TWT_ACCESS_KEY=___INSERT___TOKENS___HERE____
+      - TWT_ACCESS_SECRET=___INSERT___TOKENS___HERE____
+      - TWT_BEARER_TOKEN=___INSERT___TOKENS___HERE____
+      - TWT_CONSUMER_KEY=___INSERT___TOKENS___HERE____
+      - TWT_CONSUMER_SECRET=___INSERT___TOKENS___HERE____
+    volumes:
+      - media:/app/media
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:11
+    container_name: postgres
+    command: postgres -c 'max_connections=1000'
+    restart: always
+    environment:
+      POSTGRES_DB: bulletin
+      POSTGRES_PASSWORD: bulletin
+      POSTGRES_USER: bulletin
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
+volumes:
+  media:
+    external: false
+  postgres:
+    external: false

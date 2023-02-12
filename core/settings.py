@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'import_export',
     'daphne',
     'channels',
+    'django_celery_beat',
     'apps.home.config.HomeConfig',
     'apps.system.config.SystemConfig',
     'apps.internet_speedtester.config.InternetSpeedtesterConfig',
@@ -70,6 +71,9 @@ ROOT_URLCONF = 'core.urls'
 LOGIN_REDIRECT_URL = "home"  # Route defined in home/urls.py
 LOGOUT_REDIRECT_URL = "home"  # Route defined in home/urls.py
 TEMPLATE_DIR = os.path.join(CORE_DIR, "apps/templates")  # ROOT dir for templates
+
+# Fixtures DIR
+FIXTURE_DIRS = [os.path.join(BASE_DIR, 'core/fixtures')]
 
 TEMPLATES = [
     {
@@ -176,3 +180,16 @@ TWT_ACCESS_SECRET = os.environ.get("TWT_ACCESS_SECRET", "")
 SPEEDTESTER_INTERVAL_TIME_HRS = os.environ.get("SPEEDTESTER_INTERVAL_TIME_HRS", 4)
 TEXT_TWEET_INTERVAL_TIME_MINS = os.environ.get("TEXT_TWEET_INTERVAL_TIME_MINS", 60)
 IMAGE_TWEET_INTERVAL_TIME_DAYS = os.environ.get("IMAGE_TWEET_INTERVAL_TIME_DAYS", 1)
+
+# Redis Configuration Options
+REDIS_SERVER_HOST = os.environ.get("REDIS_SERVER_HOST", 'localhost')
+REDIS_SERVER_PORT = os.environ.get("REDIS_SERVER_PORT", 6379)
+
+# Celery Configuration Options
+CELERY_TIMEZONE = "Africa/Cairo"
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+CELERY_BROKER_URL = f'redis://{REDIS_SERVER_HOST}:{REDIS_SERVER_PORT}/0'
+CELERY_RESULT_BACKEND = f'redis://{REDIS_SERVER_HOST}:{REDIS_SERVER_PORT}/0'
+CELERY_BACKEND_URL = f'redis://{REDIS_SERVER_HOST}:{REDIS_SERVER_PORT}/0'
