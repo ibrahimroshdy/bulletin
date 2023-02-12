@@ -1,4 +1,4 @@
-from apps.social.tasks import random_auto_image_tweeter_process
+from apps.social.tasks import random_auto_tweeter_process
 
 if __name__ == '__main__':
-    random_auto_image_tweeter_process()
+    random_auto_tweeter_process()
