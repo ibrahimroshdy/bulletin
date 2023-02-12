@@ -3,9 +3,7 @@ version: "3"
 services:
   # Bulletin Backend Service
   bulletin:
-    build:
-      context: ..
-      dockerfile: Dockerfile
+    image: bulletin
     container_name: bulletin
     restart: always
     ports:
@@ -13,7 +11,7 @@ services:
     environment:
       - PORT=8000
       - SECRET_KEY=aahckjadf^^^changeinproduction^^ajshjdjkhaskjdh
-      - DEBUG=True
+      - DEBUG=False
       - DATABASE_URL=postgres://bulletin:bulletin@postgres:5432/bulletin
       - REDIS_SERVER_HOST=redis
       - TWT_ACCESS_KEY=___INSERT___TOKENS___HERE____
@@ -27,15 +25,13 @@ services:
       - postgres
 
   bulletin_celery_worker:
-    build:
-      context: ..
-      dockerfile: docker/Dockerfile
+    image: bulletin
     container_name: bulletin_celery_worker
     restart: always
     command: /bin/bash -c "python manage.py collectstatic && celery -A core.celery_app worker --loglevel=info"
     environment:
       - SECRET_KEY=aahckjadf^^^changeinproduction^^ajshjdjkhaskjdh
-      - DEBUG=True
+      - DEBUG=False
       - DATABASE_URL=postgres://bulletin:bulletin@postgres:5432/bulletin
       - REDIS_SERVER_HOST=redis
       - TWT_ACCESS_KEY=___INSERT___TOKENS___HERE____
@@ -50,15 +46,13 @@ services:
       - bulletin
 
   bulletin_celery_beat:
-    build:
-      context: ..
-      dockerfile: docker/Dockerfile
+    image: bulletin
     container_name: bulletin_celery_beat
     restart: always
     command: /bin/bash -c "python manage.py collectstatic && celery -A core.celery_app beat --loglevel=info"
     environment:
       - SECRET_KEY=aahckjadf^^^changeinproduction^^ajshjdjkhaskjdh
-      - DEBUG=True
+      - DEBUG=False
       - DATABASE_URL=postgres://bulletin:bulletin@postgres:5432/bulletin
       - REDIS_SERVER_HOST=redis
       - TWT_ACCESS_KEY=___INSERT___TOKENS___HERE____

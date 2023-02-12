@@ -15,11 +15,15 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path, include  # add this
+from django.urls import include, path  # add this
+
+admin.site.site_header = "Bulletin Admin"
+admin.site.site_title = "Bulletin Admin Portal"
+admin.site.index_title = "Welcome to Bulletin Project Portal"
 
 urlpatterns = [
-    path('admin/', admin.site.urls),          # Django admin route
-    path("", include("apps.authentication.urls")), # Auth routes - login / register
+    path('admin/', admin.site.urls),  # Django admin route
+    path("", include("apps.authentication.urls")),  # Auth routes - login / register
 
     # ADD NEW Routes HERE
 

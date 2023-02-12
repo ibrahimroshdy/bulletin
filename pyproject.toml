@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "bulletin"
-version = "0.1.0"
+version = "0.2.0"
 description = "A bulletin project built by Django to display a dashboard that integrates couple of applications that include weather, internet speed and system info."
 authors = ["ibrahimroshdy <ibrahimabdelrahman@aucegypt.edu>"]
 license = "MIT"
@@ -29,6 +29,9 @@ codecov = "^2.1.12"
 psycopg2-binary = "^2.9.3"
 tweepy = "^4.10.1"
 timeloop = "^1.0.2"
+Pillow = "^9.4.0"
+textwrap3 = "^0.9.2"
+redis = "^4.5.1"
 
 [tool.poetry.dev-dependencies]
 

@@ -3,9 +3,7 @@ version: "3"
 services:
   # Bulletin Backend Service
   bulletin:
-    build:
-      context: ..
-      dockerfile: Dockerfile
+    image: bulletin
     container_name: bulletin
     restart: always
     ports:
@@ -27,9 +25,7 @@ services:
       - postgres
 
   bulletin_celery_worker:
-    build:
-      context: ..
-      dockerfile: docker/Dockerfile
+    image: bulletin
     container_name: bulletin_celery_worker
     restart: always
     command: /bin/bash -c "python manage.py collectstatic && celery -A core.celery_app worker --loglevel=info"
@@ -50,9 +46,7 @@ services:
       - bulletin
 
   bulletin_celery_beat:
-    build:
-      context: ..
-      dockerfile: docker/Dockerfile
+    image: bulletin
     container_name: bulletin_celery_beat
     restart: always
     command: /bin/bash -c "python manage.py collectstatic && celery -A core.celery_app beat --loglevel=info"

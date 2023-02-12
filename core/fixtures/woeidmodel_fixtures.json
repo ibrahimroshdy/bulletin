@@ -1,0 +1,35 @@
+[
+  {
+    "model": "social.woeidmodel",
+    "pk": "1937801",
+    "fields": {
+      "created": "2023-01-27T00:36:18",
+      "modified": "2023-02-06T23:47:46.681",
+      "country": "Saudi Arabia",
+      "cc": "SA",
+      "active": true
+    }
+  },
+  {
+    "model": "social.woeidmodel",
+    "pk": "23424802",
+    "fields": {
+      "created": "2023-01-27T00:36:06",
+      "modified": "2023-02-06T23:47:46.679",
+      "country": "Egypt",
+      "cc": "EG",
+      "active": true
+    }
+  },
+  {
+    "model": "social.woeidmodel",
+    "pk": "23424975",
+    "fields": {
+      "created": "2023-01-27T00:36:53",
+      "modified": "2023-02-06T23:47:46.677",
+      "country": "United Kingdom",
+      "cc": "UK",
+      "active": true
+    }
+  }
+]

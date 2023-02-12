@@ -6,15 +6,15 @@
     </div>
 
     <div class="card-body">
-{#        <div class="container">#}
-            <div class="table-responsive">
-                <h6 class="white">TRENDING TWITTER TOPICS BELOW</h6>
+        {#        <div class="container">#}
+        <div class="table-responsive">
+            <h6 class="white">TRENDING TWITTER TOPICS BELOW</h6>
 
-                <table class='table tablesorter' style='width:100%' id="twt-trends-table">
-                </table>
+            <table class='table tablesorter' style='width:100%' id="twt-trends-table">
+            </table>
 
-            </div>
-{#        </div>#}
+        </div>
+        {#        </div>#}
     </div>
 
     <div class="card-footer">
@@ -30,13 +30,13 @@
         dataType: "json",
         success: (data) => {
             var content = ""
-            console.log(data)
+            {#console.log(data)#}
             for (var [country, trends] of Object.entries(data)) {
                 content += '<tr><td class="text-info">' + country + '</td>'
-                console.log(country, trends)
+                {#console.log(country, trends)#}
 
                 for (var [key, value] of Object.entries(trends.trends)) {
-                    console.log(key, value)
+                    {#console.log(key, value)#}
                     content += '<td class="text-center"><a href="' + value.url + '">' + value.name + '</a></td>';
                 }
                 content += "</tr>"
