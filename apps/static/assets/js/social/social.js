@@ -43,9 +43,9 @@ getTwitterTrendsbyAjax(function (response) {
         }
     }
 
-    console.log(words)
-
-    console.log(words)
+    // console.log(words)
+    //
+    // console.log(words)
 
 // words.sort(function (a, b) {
 //     return -1 * (a.freq - b.freq);

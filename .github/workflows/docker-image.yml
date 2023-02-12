@@ -4,40 +4,39 @@ name: Bulletin CI
 on: [ push ]
 
 jobs:
-  build_push:
+  build:
     runs-on: ubuntu-latest
-    name: build docker
+    name: build for amd64/arm64
     steps:
-      ##########   CHECK OUT REPO AND PRINT REPO INFO #######
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Intro to job runner
-        run: |
-          echo "job runner details "
-          echo "Event: ${{ github.event_name }}"
-          echo "os: ${{ runner.os }} server."
-          echo "Repository: ${{ github.repository }}:${{ github.ref_name }}."
-          ls ${{ github.workspace }}
-      ######### DOCKER BUILD AND PUSH CUSTOM ACTION #############
-      - name: Docker Build and Push
-        uses: ./.github/actions/docker-build-push-image
+
+        # Setup hardware emulator using QEMU
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+        # Setup Docker Builderx for multi-arch images
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
         with:
-          username:
-            ${{ github.REPOSITORY_OWNER }}
-          password:
-            ${{ secrets.pta }}
-          registry:
-            ghcr.io
-          repository:
-            ${{ github.repository }}
-          tag:
-            ${{ github.ref_name }}
-          file:
-            Dockerfile
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.pta }}
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          platforms: linux/amd64, linux/arm64
+          push: true
+          tags: ghcr.io/${{ github.repository }}:${{ github.ref_name }}
+
   test:
-    needs: build_push
+    needs: build
     runs-on: ubuntu-latest
-    name: test docker
+    name: run unit tests
     steps:
       ##########    CHECK OUT REPO AND PRINT REPO INFO #######
       - name: Checkout
@@ -47,7 +46,7 @@ jobs:
         uses: ./.github/actions/docker-pull-image
         with:
           username:
-            ${{ github.REPOSITORY_OWNER }}
+            ${{ github.repository_owner }}
           password:
             ${{ secrets.pta }}
           registry:
@@ -63,5 +62,4 @@ jobs:
           -e TWT_ACCESS_KEY="${{ secrets.TWT_ACCESS_KEY }}"
           -e TWT_ACCESS_SECRET="${{ secrets.TWT_ACCESS_SECRET }}"
           ghcr.io/${{ github.repository }}:${{ github.ref_name }}
-          /bin/bash -c "coverage run manage.py test apps && codecov --token=${{ secrets.codecov_token }}"
-
+          /bin/bash -c "coverage run manage.py test apps"

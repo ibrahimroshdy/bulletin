@@ -25,7 +25,7 @@
         type: "GET",
         dataType: "json",
         success: (data) => {
-            console.log(data)
+            {#console.log(data)#}
             var createdDate = new Date(data.modified);
             var options = {year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'};
             var date_modified = createdDate.toLocaleString("en-US", options);

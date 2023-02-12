@@ -13,18 +13,76 @@ services:
       - SECRET_KEY=aahckjadf^^^changeinproduction^^ajshjdjkhaskjdh
       - DEBUG=False
       - DATABASE_URL=postgres://bulletin:bulletin@postgres:5432/bulletin
+      - REDIS_SERVER_HOST=redis
+      - TWT_ACCESS_KEY=___INSERT___TOKENS___HERE____
+      - TWT_ACCESS_SECRET=___INSERT___TOKENS___HERE____
+      - TWT_BEARER_TOKEN=___INSERT___TOKENS___HERE____
+      - TWT_CONSUMER_KEY=___INSERT___TOKENS___HERE____
+      - TWT_CONSUMER_SECRET=___INSERT___TOKENS___HERE____
     volumes:
       - media:/app/media
+    depends_on:
+      - postgres
+
+  bulletin_celery_worker:
+    image: bulletin
+    container_name: bulletin_celery_worker
+    restart: always
+    command: /bin/bash -c "python manage.py collectstatic && celery -A core.celery_app worker --loglevel=info"
+    environment:
+      - SECRET_KEY=aahckjadf^^^changeinproduction^^ajshjdjkhaskjdh
+      - DEBUG=False
+      - DATABASE_URL=postgres://bulletin:bulletin@postgres:5432/bulletin
+      - REDIS_SERVER_HOST=redis
+      - TWT_ACCESS_KEY=___INSERT___TOKENS___HERE____
+      - TWT_ACCESS_SECRET=___INSERT___TOKENS___HERE____
+      - TWT_BEARER_TOKEN=___INSERT___TOKENS___HERE____
+      - TWT_CONSUMER_KEY=___INSERT___TOKENS___HERE____
+      - TWT_CONSUMER_SECRET=___INSERT___TOKENS___HERE____
+    volumes:
+      - media:/app/media
+    depends_on:
+      - redis
+      - bulletin
+
+  bulletin_celery_beat:
+    image: bulletin
+    container_name: bulletin_celery_beat
+    restart: always
+    command: /bin/bash -c "python manage.py collectstatic && celery -A core.celery_app beat --loglevel=info"
+    environment:
+      - SECRET_KEY=aahckjadf^^^changeinproduction^^ajshjdjkhaskjdh
+      - DEBUG=False
+      - DATABASE_URL=postgres://bulletin:bulletin@postgres:5432/bulletin
+      - REDIS_SERVER_HOST=redis
+      - TWT_ACCESS_KEY=___INSERT___TOKENS___HERE____
+      - TWT_ACCESS_SECRET=___INSERT___TOKENS___HERE____
+      - TWT_BEARER_TOKEN=___INSERT___TOKENS___HERE____
+      - TWT_CONSUMER_KEY=___INSERT___TOKENS___HERE____
+      - TWT_CONSUMER_SECRET=___INSERT___TOKENS___HERE____
+    volumes:
+      - media:/app/media
+    depends_on:
+      - redis
+      - bulletin
+      - bulletin_celery_worker
+
+  redis:
+    image: redis:5-alpine
+    container_name: redis
+    restart: always
+    ports:
+      - "127.0.0.1:6379:6379"
 
   postgres:
-    image: postgres:14
+    image: postgres:11
     container_name: postgres
     command: postgres -c 'max_connections=1000'
     restart: always
     environment:
-      POSTGRES_DB: refresher
-      POSTGRES_PASSWORD: refresher
-      POSTGRES_USER: refresher
+      POSTGRES_DB: bulletin
+      POSTGRES_PASSWORD: bulletin
+      POSTGRES_USER: bulletin
     ports:
       - "127.0.0.1:5432:5432"
     volumes:

@@ -1,0 +1,43 @@
+# Github workflow runner instructions actions
+name: Bulletin CI — Native
+
+on: [ push ]
+
+jobs:
+  test-native:
+    runs-on: ubuntu-latest
+    name: test native
+    steps:
+      ##########   CHECK OUT REPO AND PRINT REPO INFO #######
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      - name: Intro to job runner
+        run: |
+          echo "job runner details "
+          echo "Event: ${{ github.event_name }}"
+          echo "os: ${{ runner.os }} server."
+          echo "Repository: ${{ github.repository }}:${{ github.ref_name }}."
+          ls ${{ github.workspace }}
+
+      - name: Install poetry and python packages
+        run: |
+          pip install pyfiglet
+          pip install -r requirements.txt
+          pyfiglet Packges Downloaded
+
+      - name: Run test local in container
+        run: |
+          export TWT_CONSUMER_KEY="${{ secrets.TWT_CONSUMER_KEY }}"
+          export TWT_CONSUMER_SECRET="${{ secrets.TWT_CONSUMER_SECRET }}"
+          export TWT_ACCESS_KEY="${{ secrets.TWT_ACCESS_KEY }}"
+          export TWT_ACCESS_SECRET="${{ secrets.TWT_ACCESS_SECRET }}"
+          coverage run manage.py test apps && coverage xml --data-file=.coverage
+
+      - name: Upload to CodeCov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.codecov_token }} # not required for public repos
+          files: ./coverage.xml
+          name: codecov-umbrella # optional
+          fail_ci_if_error: true # optional (default = false)
+          verbose: true # optional (default = false)
