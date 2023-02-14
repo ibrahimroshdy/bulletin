@@ -176,6 +176,10 @@ TWT_CONSUMER_SECRET = os.environ.get("TWT_CONSUMER_SECRET", "")
 TWT_ACCESS_KEY = os.environ.get("TWT_ACCESS_KEY", "")
 TWT_ACCESS_SECRET = os.environ.get("TWT_ACCESS_SECRET", "")
 
+# Social/Slack Access Token Variables
+SLACK_BOT_TOKEN = os.environ.get("SLACK_BOT_TOKEN", "")
+SLACK_BOT_CHANNEL = os.environ.get("SLACK_BOT_CHANNEL", "")
+
 # Tasks Interval Timing
 SPEEDTESTER_INTERVAL_TIME_HRS = os.environ.get("SPEEDTESTER_INTERVAL_TIME_HRS", 4)
 TEXT_TWEET_INTERVAL_TIME_MINS = os.environ.get("TEXT_TWEET_INTERVAL_TIME_MINS", 60)
