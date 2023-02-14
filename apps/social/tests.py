@@ -120,6 +120,7 @@ class TweetTestCase(TestCase):
             assert True
 
     # @staticmethod
+    # https://gist.github.com/camtheman256/d20ddd3c1449f487e748c22b761d6bed
     # def test_tweet_celery_tasks():
     #     random_auto_tweeter_process()
     #     random_auto_image_tweeter_process()
