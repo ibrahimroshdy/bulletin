@@ -5,7 +5,7 @@ from loguru import logger
 from model_bakery import baker
 
 from .models import TweetModel, WoeidModel
-from .utils import AbstractTweepy
+from .abstract import AbstractTweepy
 
 
 # Create your tests here.

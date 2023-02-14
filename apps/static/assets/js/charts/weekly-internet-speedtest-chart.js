@@ -79,7 +79,7 @@ function getLatestWeekSpeedtestAjax(callback) {
 function ajaxCallback() {
     getLatestWeekSpeedtestAjax(function (response) {
         //processing the data
-        console.log(response);
+        // console.log(response);
         var labels = [];
         var downloadData = [];
         var uploadData = [];
