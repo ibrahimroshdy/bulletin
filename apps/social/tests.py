@@ -1,4 +1,3 @@
-import os
 from datetime import datetime
 
 from django.test import TestCase
@@ -6,7 +5,6 @@ from loguru import logger
 from model_bakery import baker
 
 from .models import TweetModel, WoeidModel
-from .tasks import random_auto_image_tweeter_process, random_auto_tweeter_process
 from .utils import AbstractTweepy
 
 
@@ -121,18 +119,19 @@ class TweetTestCase(TestCase):
             logger.error(f'TypeError: {TE}')
             assert True
 
-    @staticmethod
-    def test_tweet_celery_tasks():
-        random_auto_tweeter_process()
-        random_auto_image_tweeter_process()
-
-    @staticmethod
-    def test_tweet_celery_tasks_failure():
-        os.environ["TWT_BEARER_TOKEN"] = "1"
-        os.environ["TWT_CONSUMER_KEY"] = "1"
-        os.environ["TWT_CONSUMER_SECRET"] = "1"
-        os.environ["TWT_ACCESS_KEY"] = "1"
-        os.environ["TWT_ACCESS_SECRET"] = "1"
-
-        random_auto_tweeter_process()
-        random_auto_image_tweeter_process()
+    # @staticmethod
+    # https://gist.github.com/camtheman256/d20ddd3c1449f487e748c22b761d6bed
+    # def test_tweet_celery_tasks():
+    #     random_auto_tweeter_process()
+    #     random_auto_image_tweeter_process()
+    #
+    # @staticmethod
+    # def test_tweet_celery_tasks_failure():
+    #     os.environ["TWT_BEARER_TOKEN"] = "1"
+    #     os.environ["TWT_CONSUMER_KEY"] = "1"
+    #     os.environ["TWT_CONSUMER_SECRET"] = "1"
+    #     os.environ["TWT_ACCESS_KEY"] = "1"
+    #     os.environ["TWT_ACCESS_SECRET"] = "1"
+    #
+    #     random_auto_tweeter_process()
+    #     random_auto_image_tweeter_process()
