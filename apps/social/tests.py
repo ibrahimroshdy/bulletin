@@ -85,10 +85,12 @@ class TweetTestCase(TestCase):
         :return:True if response is empty, else otherwise
         """
         at = AbstractTweepy(access_key='WRONG_ACCESS_KEY')
-        response = at.create_tweet(text="TESTING")
-        if not response:
+        response_bool, response_msg = at.create_tweet(text="TESTING")
+        if not response_bool:
+            logger.success(f'{response_msg}')
             assert True
         else:
+            logger.error(f'{response_msg}')
             assert False
 
     @staticmethod
@@ -98,8 +100,10 @@ class TweetTestCase(TestCase):
         :return:True if response is empty, else otherwise
         """
         at = AbstractTweepy(bearer_token='WRONG_BEARER_TOKEN')
-        response = at.create_tweet(text="TESTING")
-        if not response:
+        response_bool, response_msg = at.create_tweet(text="TESTING")
+        if not response_bool:
+            logger.success(f'{response_msg}')
             assert True
         else:
+            logger.error(f'{response_msg}')
             assert False
