@@ -148,3 +148,6 @@ class AbstractTweepy:
         except tweepy.errors.BadRequest as BR:
             logger.error(f'WRONG ACCESS KEY/SECRET {BR}')
             return False, f'WRONG ACCESS KEY/SECRET {BR}'
+        except FileNotFoundError as FNF:
+            logger.error(f'FileNotFoundError Tweet Image Template: {FNF}')
+

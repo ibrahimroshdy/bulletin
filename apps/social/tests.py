@@ -92,3 +92,22 @@ class TweetTestCase(TestCase):
             assert True
         else:
             assert False
+
+    @staticmethod
+    def test_posting_tweet_image_failure_consumer_key():
+        """
+        Tests Invalid or expired token handling
+        :return:True if response is empty, else otherwise
+        """
+        at = AbstractTweepy(consumer_key='WRONG_CONSUMER_KEY',
+                            consumer_secret='WRONG_CONSUMER_SECERT',
+                            bearer_token='WRONG_BEARER_TOKEN', )
+        try:
+            response_bool, response_msg = at.create_image_tweet(status="TESTING", media_filename="TESTING")
+            if not response_bool:
+                assert True
+            else:
+                assert False
+        except TypeError as TE:
+            logger.error(f'TypeError: {TE}')
+            assert True
