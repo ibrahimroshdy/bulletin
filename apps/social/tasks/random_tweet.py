@@ -5,15 +5,16 @@ from celery import shared_task
 from django.utils import timezone
 from loguru import logger
 
-from core import messages
+from psycopg2 import OperationalError
 
 # Setup django to be able to access the settings file
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
 django.setup()
 from apps.social.models import TweetModel, TweetSystemModel
-from apps.social.utils import AbstractTweepy
-from psycopg2 import OperationalError
+from apps.social.utils import AbstractTweepy, AbstractSlackAPI
+from core import messages as core_messages
+
 
 
 @shared_task
@@ -43,29 +44,58 @@ def random_auto_tweeter_process():
     Raises:
     OperationalError: If there is an error in the database.
     """
+    # Load the system status model
     try:
         system_status = TweetSystemModel.load()
+        # Create an instance of the AbstractTweepy class
         at_twt = AbstractTweepy()
+        # Get a random tweet from the TweetModel
         tweet = TweetModel.random_tweet.get_random_tweet()
+        # Create an instance of the AbstractSlackAPI class
+        asa_slk = AbstractSlackAPI()
 
+        # If a tweet is retrieved
         if tweet is not None:
+            # Call the create_tweet method of the AbstractTweepy class
             twt_bool, twt_response = at_twt.create_tweet(text=tweet.tweet_text)
 
+            # If the tweet is successfully posted
             if twt_bool:
+                # Update the tweet in the database
                 tweet.is_tweeted = True
                 tweet.tweet_date = timezone.now()
                 tweet.save()
 
+                # Prepare a success message
                 sucess_message = f'Tweet #: {tweet.id} posted'
 
+                # Log the success message
                 logger.success(sucess_message)
+
+                # Update the system status model
                 system_status.set_working(message=sucess_message)
+
+                # Post the success message to Slack
+                asa_slk.post_message(text=sucess_message)
             else:
+                # Log the error message
                 logger.error(f'{twt_response}')
+                # Update the system status model with the error message
                 system_status.set_error(message=twt_response)
 
+                # Post the error message to Slack
+                asa_slk.post_message(text=twt_response)
+
+        # If no tweet is retrieved
         else:
-            logger.warning(messages.__NO_TWEETS_AVAIABLE_IN_DB)
-            system_status.set_maintenance(message=messages.__NO_TWEETS_AVAIABLE_IN_DB)
+            # Log a warning message
+            logger.warning(core_messages.TWT_NO_TWEETS_AVAIABLE_IN_DB)
+            # Update the system status model with a maintenance message
+            system_status.set_maintenance(message=core_messages.TWT_NO_TWEETS_AVAIABLE_IN_DB)
+            # Post the error message to Slack
+            asa_slk.post_message(text=core_messages.TWT_NO_TWEETS_AVAIABLE_IN_DB)
+
+    # Handle the operational error
     except OperationalError as OE:
+        # Log the operational error
         logger.error(f'OperationalError DB: {OE}')

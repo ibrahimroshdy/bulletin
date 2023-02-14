@@ -19,6 +19,8 @@ services:
       - TWT_BEARER_TOKEN=___INSERT___TOKENS___HERE____
       - TWT_CONSUMER_KEY=___INSERT___TOKENS___HERE____
       - TWT_CONSUMER_SECRET=___INSERT___TOKENS___HERE____
+      - SLACK_BOT_CHANNEL=___INSERT___TOKENS___HERE____
+      - SLACK_BOT_TOKEN=___INSERT___TOKENS___HERE____
     volumes:
       - media:/app/media
     depends_on:
@@ -28,7 +30,7 @@ services:
     image: bulletin
     container_name: bulletin_celery_worker
     restart: always
-    command: /bin/bash -c "python manage.py collectstatic && celery -A core.celery_app worker --loglevel=info"
+    command: /bin/bash -c "echo 'yes' | python3 manage.py collectstatic && celery -A core.celery_app worker --loglevel=info"
     environment:
       - SECRET_KEY=aahckjadf^^^changeinproduction^^ajshjdjkhaskjdh
       - DEBUG=False
@@ -39,6 +41,8 @@ services:
       - TWT_BEARER_TOKEN=___INSERT___TOKENS___HERE____
       - TWT_CONSUMER_KEY=___INSERT___TOKENS___HERE____
       - TWT_CONSUMER_SECRET=___INSERT___TOKENS___HERE____
+      - SLACK_BOT_CHANNEL=___INSERT___TOKENS___HERE____
+      - SLACK_BOT_TOKEN=___INSERT___TOKENS___HERE____
     volumes:
       - media:/app/media
     depends_on:
@@ -49,7 +53,7 @@ services:
     image: bulletin
     container_name: bulletin_celery_beat
     restart: always
-    command: /bin/bash -c "python manage.py collectstatic && celery -A core.celery_app beat --loglevel=info"
+    command: /bin/bash -c "echo 'yes' | python3 manage.py collectstatic && celery -A core.celery_app beat --loglevel=info"
     environment:
       - SECRET_KEY=aahckjadf^^^changeinproduction^^ajshjdjkhaskjdh
       - DEBUG=False
@@ -60,6 +64,8 @@ services:
       - TWT_BEARER_TOKEN=___INSERT___TOKENS___HERE____
       - TWT_CONSUMER_KEY=___INSERT___TOKENS___HERE____
       - TWT_CONSUMER_SECRET=___INSERT___TOKENS___HERE____
+      - SLACK_BOT_CHANNEL=___INSERT___TOKENS___HERE____
+      - SLACK_BOT_TOKEN=___INSERT___TOKENS___HERE____
     volumes:
       - media:/app/media
     depends_on:
