@@ -115,6 +115,9 @@ class AbstractTweepy:
         except tweepy.errors.BadRequest as BR:
             logger.error(f'WRONG ACCESS KEY/SECRET {BR}')
             return False, f'WRONG ACCESS KEY/SECRET {BR}'
+        except tweepy.errors.Forbidden as TEF:
+            logger.error(f'Unknown is forbidden {TEF}')
+            return False, f'Unknown is forbidden {TEF}'
 
     def create_image_tweet(self, status, media_filename):
         """
@@ -145,5 +148,3 @@ class AbstractTweepy:
         except tweepy.errors.BadRequest as BR:
             logger.error(f'WRONG ACCESS KEY/SECRET {BR}')
             return False, f'WRONG ACCESS KEY/SECRET {BR}'
-
-

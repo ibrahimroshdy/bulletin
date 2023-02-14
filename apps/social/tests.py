@@ -79,12 +79,14 @@ class TweetTestCase(TestCase):
             assert True
 
     @staticmethod
-    def test_posting_tweet_failure_access_key():
+    def test_posting_tweet_failure_consumer_key():
         """
         Tests Invalid or expired token handling
         :return:True if response is empty, else otherwise
         """
-        at = AbstractTweepy(access_key='WRONG_ACCESS_KEY')
+        at = AbstractTweepy(consumer_key='WRONG_CONSUMER_KEY',
+                            consumer_secret='WRONG_CONSUMER_SECERT',
+                            bearer_token='WRONG_BEARER_TOKEN', )
         response_bool, response_msg = at.create_tweet(text="TESTING")
         if not response_bool:
             logger.success(f'{response_msg}')
