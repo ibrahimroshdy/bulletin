@@ -13,17 +13,22 @@
 {#        </div>#}
 {#    </div>#}
 {#</div>#}
+<div class="card" style="max-height: 180px; height: 150px">
+    <div class="container">
 
-<div class="card card-body">
+        <div class="card-header">
+            <h5 class="card-category"><i class="tim-icons icon-square-pin text-warning"></i> Weather</h5>
+            {#        <h3 class="card-title"><i class="tim-icons icon-laptop text-info"></i> Current Weather </h3>#}
+        </div>
 
-    <div class="card-header">
-        <h5 class="card-category"><i class="tim-icons icon-square-pin text-warning"></i> Weather</h5>
-        {#        <h3 class="card-title"><i class="tim-icons icon-laptop text-info"></i> Current Weather </h3>#}
-    </div>
-    <div class="card-body">
         <div class="container">
-            <h4 class="temp text-warning" id="temp">location</h4>
-            <h5 class="location" id="location-name">needed</h5>
+            <div class="container-fluid">
+                <h5 class="location text-warning" id="condition-text">location</h5>
+                <br><br>
+                <h6 class="location" id="wind">needed</h6>
+            </div>
+        </div>
+        <div class="card-footer">
         </div>
     </div>
 </div>
