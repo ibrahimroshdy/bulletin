@@ -8,7 +8,6 @@ from loguru import logger
 from core import messages as core_messages
 
 # Setup django to be able to access the settings file
-
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
 django.setup()
 
