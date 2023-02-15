@@ -34,7 +34,7 @@ def tweet_min_limit_notification_process(limit=20):
     # If the count of unsent tweets is less than or equal to the specified limit
     if twt_objects <= limit:
         # Send a notification to Slack with the specified message with hostname
-        notification_message = f':warnig: *{socket.gethostname()}*: {core_messages.SLK_TWT_TWEETS_IN_DB_CLOSE_TO_LIMIT}'
+        notification_message = f':warning: TEST: *{socket.gethostname()}*: {core_messages.SLK_TWT_TWEETS_IN_DB_CLOSE_TO_LIMIT}'
         slack_api.post_message(text=notification_message)
         # Log sucessfull slack message sent
         logger.success(core_messages.SLACK_LOGGING_POSTED_200)
