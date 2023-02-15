@@ -12,8 +12,6 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
 django.setup()
 
 
-
-
 class AbstractSlackAPI:
     """
         An abstract Slack class to organize the needed functionalies for Social app
@@ -48,9 +46,12 @@ class AbstractSlackAPI:
         try:
             response = self.client.chat_postMessage(text=text, channel=channel)
             assert response["message"]["text"] == text
-            logger.success(f'{core_messages.SLACK_MESSAGE_POSTED_200}')
+            logger.success(f'{core_messages.SLACK_LOGGING_POSTED_200}')
+            return True
         except SlackApiError as SAE:
             # You will get a SlackApiError if "ok" is False
             assert SAE.response["ok"] is False
             assert SAE.response["error"]  # str like 'invalid_auth', 'channel_not_found'
+            logger.error(f'{core_messages.SLACK_LOGGING_NOT_POSTED_500}')
             logger.error(SAE)
+            return False

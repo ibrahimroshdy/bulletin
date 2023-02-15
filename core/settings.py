@@ -146,7 +146,7 @@ LANGUAGE_CODE = 'en-us'
 TIME_ZONE = "Africa/Cairo"
 USE_I18N = True
 USE_L10N = True
-USE_TZ = False
+USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
@@ -178,7 +178,7 @@ TWT_ACCESS_SECRET = os.environ.get("TWT_ACCESS_SECRET", "")
 
 # Social/Slack Access Token Variables
 SLACK_BOT_TOKEN = os.environ.get("SLACK_BOT_TOKEN", "")
-SLACK_BOT_CHANNEL = os.environ.get("SLACK_BOT_CHANNEL", "")
+SLACK_BOT_CHANNEL = os.environ.get("SLACK_BOT_CHANNEL", "bulletin-news")
 
 # Tasks Interval Timing
 SPEEDTESTER_INTERVAL_TIME_HRS = os.environ.get("SPEEDTESTER_INTERVAL_TIME_HRS", 4)
