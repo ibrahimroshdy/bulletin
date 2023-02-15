@@ -3,7 +3,7 @@ from django.forms.models import model_to_dict
 from django.http import JsonResponse
 
 from .models import TweetSystemModel
-from .utils import AbstractTweepy
+from .abstract import AbstractTweepy
 
 
 def twt_get_trends(request):

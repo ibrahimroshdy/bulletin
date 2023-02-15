@@ -11,10 +11,10 @@ from psycopg2 import OperationalError
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
 django.setup()
-from apps.social.models import TweetModel, TweetSystemModel
-from apps.social.utils import AbstractTweepy, AbstractSlackAPI
-from core import messages as core_messages
 
+from apps.social.models import TweetModel, TweetSystemModel
+from apps.social.abstract import AbstractTweepy, AbstractSlackAPI
+from core import messages as core_messages
 
 
 @shared_task
@@ -24,25 +24,25 @@ def random_auto_tweeter_process():
     This function performs a process to tweet a randomly selected tweet using the Twitter API.
 
     Summary:
-    The function creates an instance of the `AbstractTweepy` class, which has access to the Twitter API using
-    the API keys. It then selects a random tweet from the database using the `get_random_tweet` function of
-    `TweetModel`. If a tweet is found, the function tweets it and updates the tweet's information in the database.
-    If the tweet posting is unsuccessful, an error message is logged. If no tweets are found in the database,
-    a warning message is logged.
+        The function creates an instance of the `AbstractTweepy` class, which has access to the Twitter API using
+        the API keys. It then selects a random tweet from the database using the `get_random_tweet` function of
+        `TweetModel`. If a tweet is found, the function tweets it and updates the tweet's information in the database.
+        If the tweet posting is unsuccessful, an error message is logged. If no tweets are found in the database,
+        a warning message is logged.
 
     Process:
-    1. Load the `TweetSystemModel` to get the system status.
-    2. Create an instance of the `AbstractTweepy` class.
-    3. Select a random tweet from the database using the `get_random_tweet` function of `TweetModel`.
-    4. If a tweet is found:
-        a. Tweet the text of the tweet using the `create_tweet` function of the `AbstractTweepy` instance.
-        b. If the tweet posting is successful, update the tweet's information in the database.
-           Log a success message.
-        c. If the tweet posting is unsuccessful, log an error message and update the system status.
-    5. If no tweets are found in the database, log a warning message and update the system status.
+        1. Load the `TweetSystemModel` to get the system status.
+        2. Create an instance of the `AbstractTweepy` class.
+        3. Select a random tweet from the database using the `get_random_tweet` function of `TweetModel`.
+        4. If a tweet is found:
+            a. Tweet the text of the tweet using the `create_tweet` function of the `AbstractTweepy` instance.
+            b. If the tweet posting is successful, update the tweet's information in the database.
+               Log a success message.
+            c. If the tweet posting is unsuccessful, log an error message and update the system status.
+        5. If no tweets are found in the database, log a warning message and update the system status.
 
     Raises:
-    OperationalError: If there is an error in the database.
+        OperationalError: If there is an error in the database.
     """
     # Load the system status model
     try:
