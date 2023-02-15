@@ -32,6 +32,14 @@
     }
   },
   {
+    "model": "django_celery_beat.intervalschedule",
+    "pk": 5,
+    "fields": {
+      "every": 1,
+      "period": "days"
+    }
+  },
+  {
     "model": "django_celery_beat.crontabschedule",
     "pk": 1,
     "fields": {
@@ -59,7 +67,7 @@
     "model": "django_celery_beat.periodictasks",
     "pk": 1,
     "fields": {
-      "last_update": "2023-02-14T21:28:37.583Z"
+      "last_update": "2023-02-15T19:05:12.137Z"
     }
   },
   {
@@ -171,6 +179,34 @@
       "last_run_at": null,
       "total_run_count": 0,
       "date_changed": "2023-02-14T21:28:25.135Z",
+      "description": ""
+    }
+  },
+  {
+    "model": "django_celery_beat.periodictask",
+    "pk": 6,
+    "fields": {
+      "name": "tweets min count in db notification",
+      "task": "apps.social.tasks.tweet_min_limit_notification.tweet_min_limit_notification_process",
+      "interval": 5,
+      "crontab": null,
+      "solar": null,
+      "clocked": null,
+      "args": "[]",
+      "kwargs": "{\"limit\":19}",
+      "queue": null,
+      "exchange": null,
+      "routing_key": null,
+      "headers": "{}",
+      "priority": null,
+      "expires": null,
+      "expire_seconds": null,
+      "one_off": false,
+      "start_time": null,
+      "enabled": true,
+      "last_run_at": null,
+      "total_run_count": 0,
+      "date_changed": "2023-02-15T19:05:12.112Z",
       "description": ""
     }
   }

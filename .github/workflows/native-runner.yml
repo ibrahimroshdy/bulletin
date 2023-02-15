@@ -31,6 +31,7 @@ jobs:
           export TWT_CONSUMER_SECRET="${{ secrets.TWT_CONSUMER_SECRET }}"
           export TWT_ACCESS_KEY="${{ secrets.TWT_ACCESS_KEY }}"
           export TWT_ACCESS_SECRET="${{ secrets.TWT_ACCESS_SECRET }}"
+          export SLACK_BOT_TOKEN="${{ secrets.SLACK_BOT_TOKEN }}"
           coverage run manage.py test apps && coverage xml --data-file=.coverage
 
       - name: Upload to CodeCov
