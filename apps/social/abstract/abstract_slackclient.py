@@ -5,6 +5,7 @@ from django.conf import settings
 from loguru import logger
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError, SlackClientError
+
 from core import messages as core_messages
 
 # Setup django to be able to access the settings file

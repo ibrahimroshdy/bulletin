@@ -1,6 +1,8 @@
 import io
+import os
 
 from PIL import Image, ImageDraw, ImageFont
+from django.conf import settings
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.core.files.storage import FileSystemStorage
 
@@ -78,8 +80,8 @@ def write_on_image(imagepath, fontpath, imagename, text):
     # Initialize the file system storage
     fs = FileSystemStorage()
 
-    # Get the image file and font file paths
-    imagefile = staticfiles_storage.path(imagepath)
+    # Get the image file and font file paths (media and static files)
+    imagefile = os.path.join(settings.BASE_DIR, imagepath)
     fontfile = staticfiles_storage.path(fontpath)
 
     # Wrap the tweet text on the image
@@ -99,4 +101,4 @@ def write_on_image(imagepath, fontpath, imagename, text):
     full_filename = fs.path(filename)
 
     # return full filename path
-    return full_filename
+    return filename, full_filename

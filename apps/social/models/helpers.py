@@ -49,12 +49,12 @@ class TweetManager(models.Manager):
     A tweet manager model to add custom made functions
     """
 
-    def get_random_tweet(self):
+    def get_random_tweet(self, twitter_account):
         """
         A method to filter through a model with given filters
         :return: A random choice of the list
         """
-        items = list(super(TweetManager, self).filter(is_tweeted=False))
+        items = list(super(TweetManager, self).filter(is_tweeted=False, twitter_account=twitter_account))
         if len(items) != 0:
             return random.choice(items)
         else:
