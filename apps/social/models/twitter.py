@@ -22,6 +22,30 @@ class TwitterAccount(TimeStampedModel):
     def __str__(self):
         return f'{self.username}'
 
+    def logo_tag(self):
+        """
+        Returns an HTML tag for the image associated with this model instance.
+        :return: str: An HTML `img` tag with the URL of the image as the `src` attribute.
+        """
+        if self.logo:
+            return format_html(f'<img src="{self.logo.url}" width="50" height="50"/>')
+        return mark_safe('<strong>There is no logo for this account.<strong>')
+
+    def tweet_image_template_tag(self):
+        """
+        Returns an HTML tag for the image associated with this model instance.
+        :return: str: An HTML `img` tag with the URL of the image as the `src` attribute.
+        """
+        if self.tweet_image_template:
+            return format_html(f'<img src="{self.tweet_image_template.url}" width="200" height="112"/>')
+        return mark_safe('<strong>There is no image template for this account.<strong>')
+
+    logo.short_description = 'Logo'
+    logo.allow_tags = True
+
+    tweet_image_template.short_description = 'Twt Image Template'
+    tweet_image_template.allow_tags = True
+
     class Meta:
         verbose_name = 'Twitter Account'
         verbose_name_plural = 'Twitter Accounts'

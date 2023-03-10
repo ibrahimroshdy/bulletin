@@ -12,9 +12,11 @@ class TweetsInlineAdmin(admin.TabularInline):
     model = models.TweetModel
 
     def has_change_permission(self, request, obj=None):
+        """ override change permission"""
         return False
 
     def has_add_permission(self, request, obj):
+        """override add permission"""
         return False
 
 
@@ -38,11 +40,12 @@ class TwitterAccountAdmin(ImportExportModelAdmin, ExportActionMixin):
     which is registered with the django admin site.
     This class inherits from ImportExportModelAdmin and ExportActionMixin.
     """
-    list_display = ['username', 'slk_bot_channel']
+    list_display = ['username', 'slk_bot_channel', 'logo_tag']
     list_filter = ['username', 'slk_bot_channel']
     search_fields = ['username', 'slk_bot_channel']
     inlines = [TweetsInlineAdmin]
     date_hierarchy = 'created'
+    readonly_fields = ['logo_tag', 'tweet_image_template_tag']
 
 
 @admin.register(models.TweetModel)
@@ -52,9 +55,9 @@ class TweetAdmin(ImportExportModelAdmin, ExportActionMixin):
     which is registered with the django admin site.
     This class inherits from ImportExportModelAdmin and ExportActionMixin
     """
-    list_display = ['tweet_text', 'is_tweeted', 'tweet_date', 'has_image']
+    list_display = ['id', 'tweet_text', 'is_tweeted', 'tweet_date', 'has_image']
     list_filter = ['is_tweeted', 'has_image']
-    search_fields = ['tweet_text']
+    search_fields = ['tweet_text', 'id']
     date_hierarchy = 'tweet_date'
     readonly_fields = ['tweet_date', 'has_image', 'is_tweeted', 'tweet_image', 'image_tag']
 
