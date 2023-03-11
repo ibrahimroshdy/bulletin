@@ -2,98 +2,90 @@ import os
 
 import django
 from celery import shared_task
+# Setup django to be able to access the settings file
+from django.conf import settings
 from django.utils import timezone
 from loguru import logger
-
 from psycopg2 import OperationalError
-
-# Setup django to be able to access the settings file
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
 django.setup()
 
-from apps.social.models import TweetModel, TweetSystemModel
+from apps.social.models import TweetModel, TweetSystemModel, TwitterAccount
 from apps.social.abstract import AbstractTweepy, AbstractSlackAPI
 from core import messages as core_messages
 
 
 @shared_task
-def random_auto_tweeter_process():
-    # TODO: Optimize methods and function calling
-    """
-    This function performs a process to tweet a randomly selected tweet using the Twitter API.
-
-    Summary:
-        The function creates an instance of the `AbstractTweepy` class, which has access to the Twitter API using
-        the API keys. It then selects a random tweet from the database using the `get_random_tweet` function of
-        `TweetModel`. If a tweet is found, the function tweets it and updates the tweet's information in the database.
-        If the tweet posting is unsuccessful, an error message is logged. If no tweets are found in the database,
-        a warning message is logged.
-
-    Process:
-        1. Load the `TweetSystemModel` to get the system status.
-        2. Create an instance of the `AbstractTweepy` class.
-        3. Select a random tweet from the database using the `get_random_tweet` function of `TweetModel`.
-        4. If a tweet is found:
-            a. Tweet the text of the tweet using the `create_tweet` function of the `AbstractTweepy` instance.
-            b. If the tweet posting is successful, update the tweet's information in the database.
-               Log a success message.
-            c. If the tweet posting is unsuccessful, log an error message and update the system status.
-        5. If no tweets are found in the database, log a warning message and update the system status.
-
-    Raises:
-        OperationalError: If there is an error in the database.
-    """
+def random_auto_tweeter_per_account_process(account):
+    """process tweeting a random tweet per account"""
     # Load the system status model
     try:
-        system_status = TweetSystemModel.load()
-        # Create an instance of the AbstractTweepy class
-        at_twt = AbstractTweepy()
-        # Get a random tweet from the TweetModel
-        tweet = TweetModel.random_tweet.get_random_tweet()
-        # Create an instance of the AbstractSlackAPI class
-        asa_slk = AbstractSlackAPI()
+        # Get twitter account data
+        is_twt_account_in_db = TwitterAccount.objects.filter(username=account).exists()
 
-        # If a tweet is retrieved
-        if tweet is not None:
-            # Call the create_tweet method of the AbstractTweepy class
-            twt_bool, twt_response = at_twt.create_tweet(text=tweet.tweet_text)
+        if is_twt_account_in_db:
+            twitter_account = TwitterAccount.objects.get(username=account)
+            # Get a random tweet from the TweetModel
+            tweet = TweetModel.random_tweet.get_random_tweet(twitter_account=account)
+            # Create an instance of the AbstractTweepy class
+            at_twt = AbstractTweepy(consumer_key=twitter_account.twt_consumer_key,
+                                    consumer_secret=twitter_account.twt_consumer_secret,
+                                    access_key=twitter_account.twt_access_key,
+                                    access_secret=twitter_account.twt_access_secret,
+                                    bearer_token=twitter_account.twt_bearer_token)
 
-            # If the tweet is successfully posted
-            if twt_bool:
-                # Update the tweet in the database
-                tweet.is_tweeted = True
-                tweet.tweet_date = timezone.now()
-                tweet.save()
+            # Create an instance of the AbstractSlackAPI class
+            asa_slk = AbstractSlackAPI(token=twitter_account.slk_bot_token)
+            slk_channel = twitter_account.slk_bot_channel
 
-                # Prepare a success message
-                sucess_message = f'Tweet #: {tweet.id} posted'
+            system_status = TweetSystemModel.load()
 
-                # Log the success message
-                logger.success(sucess_message)
+            # If a tweet is retrieved
+            if tweet is not None:
+                # Call the create_tweet method of the AbstractTweepy class
+                twt_bool, twt_response = at_twt.create_tweet(text=tweet.tweet_text)
 
-                # Update the system status model
-                system_status.set_working(message=sucess_message)
+                # If the tweet is successfully posted
+                if twt_bool:
+                    # Update the tweet in the database
+                    tweet.is_tweeted = True
+                    tweet.tweet_date = timezone.now()
+                    tweet.save()
 
-                # Post the success message to Slack
-                asa_slk.post_message(text=sucess_message)
+                    # Prepare a success message
+                    sucess_message = f":white_check_mark: Tweet #: {tweet.id} posted"
+
+                    # Log the success message
+                    logger.success(sucess_message)
+
+                    # Update the system status model
+                    system_status.set_working(message=sucess_message)
+
+                    # Post the success message to Slack
+                    asa_slk.post_message(text=sucess_message, channel=slk_channel)
+                else:
+                    # Log the error message
+                    logger.error(f'{twt_response}')
+
+                    # Update the system status model with the error message
+                    system_status.set_error(message=twt_response)
+
+                    # Post the error message to Slack
+                    asa_slk.post_message(text=twt_response, channel=slk_channel)
+
+            # If no tweet is retrieved
             else:
-                # Log the error message
-                logger.error(f'{twt_response}')
-                # Update the system status model with the error message
-                system_status.set_error(message=twt_response)
-
+                # Log a warning message
+                logger.warning(core_messages.TWT_NO_TWEETS_AVAIABLE_IN_DB)
+                # Update the system status model with a maintenance message
+                system_status.set_maintenance(message=core_messages.TWT_NO_TWEETS_AVAIABLE_IN_DB)
                 # Post the error message to Slack
-                asa_slk.post_message(text=twt_response)
-
-        # If no tweet is retrieved
+                asa_slk.post_message(text=core_messages.TWT_NO_TWEETS_AVAIABLE_IN_DB, channel=slk_channel)
         else:
-            # Log a warning message
-            logger.warning(core_messages.TWT_NO_TWEETS_AVAIABLE_IN_DB)
-            # Update the system status model with a maintenance message
-            system_status.set_maintenance(message=core_messages.TWT_NO_TWEETS_AVAIABLE_IN_DB)
-            # Post the error message to Slack
-            asa_slk.post_message(text=core_messages.TWT_NO_TWEETS_AVAIABLE_IN_DB)
+            asa_slk = AbstractSlackAPI()
+            slack_message = f":x: {core_messages.TWT_ACCOUNT_NOT_REGISTERED}: *{account}*"
+            asa_slk.post_message(text=slack_message, channel=settings.SLACK_BOT_CHANNEL)
 
     # Handle the operational error
     except OperationalError as OE:

@@ -12,9 +12,9 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 import dj_database_url
 
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).parent.parent
 CORE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -178,7 +178,7 @@ TWT_ACCESS_SECRET = os.environ.get("TWT_ACCESS_SECRET", "")
 
 # Social/Slack Access Token Variables
 SLACK_BOT_TOKEN = os.environ.get("SLACK_BOT_TOKEN", "")
-SLACK_BOT_CHANNEL = os.environ.get("SLACK_BOT_CHANNEL", "bulletin-news")
+SLACK_BOT_CHANNEL = os.environ.get("SLACK_BOT_CHANNEL", "")
 
 # Tasks Interval Timing
 SPEEDTESTER_INTERVAL_TIME_HRS = os.environ.get("SPEEDTESTER_INTERVAL_TIME_HRS", 4)
