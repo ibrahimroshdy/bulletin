@@ -22,7 +22,7 @@ class SlackAPITestCase(TestCase):
         self.slack_sdk_fail = AbstractSlackAPI(token='WRONG_SLACKAPI_TOKEN')
         self.slack_channel = "bulletin-tests"
 
-        self.twitter_account = TwitterAccount.objects.create(username='test',
+        self.twitter_account = TwitterAccount.objects.create(username='bulletin-tests-github',
                                                              twt_bearer_token=settings.TWT_BEARER_TOKEN,
                                                              twt_access_key=settings.TWT_ACCESS_KEY,
                                                              twt_access_secret=settings.TWT_ACCESS_SECRET,

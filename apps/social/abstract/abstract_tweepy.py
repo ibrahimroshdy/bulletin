@@ -8,6 +8,7 @@ from loguru import logger
 # Setup django to be able to access the settings file
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
 django.setup()
+
 from apps.social.models import WoeidModel
 
 
@@ -16,8 +17,11 @@ class AbstractTweepy:
         An abstract Tweepy class to organize the needed functionalies for Social app
     """
 
-    def __init__(self, consumer_key=settings.TWT_CONSUMER_KEY, consumer_secret=settings.TWT_CONSUMER_SECRET,
-                 access_key=settings.TWT_ACCESS_KEY, access_secret=settings.TWT_ACCESS_SECRET,
+    def __init__(self,
+                 consumer_key=settings.TWT_CONSUMER_KEY,
+                 consumer_secret=settings.TWT_CONSUMER_SECRET,
+                 access_key=settings.TWT_ACCESS_KEY,
+                 access_secret=settings.TWT_ACCESS_SECRET,
                  bearer_token=settings.TWT_BEARER_TOKEN):
         try:
             self.auth = tweepy.OAuthHandler(consumer_key=consumer_key, consumer_secret=consumer_secret)

@@ -17,15 +17,16 @@ class Migration(migrations.Migration):
                 name='TweetSystemModel',
                 fields=[
                     (
-                    'id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                        'id',
+                        models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                     ('created', model_utils.fields.AutoCreatedField(default=django.utils.timezone.now, editable=False,
                                                                     verbose_name='created')),
                     ('modified',
                      model_utils.fields.AutoLastModifiedField(default=django.utils.timezone.now, editable=False,
                                                               verbose_name='modified')),
                     ('status', models.CharField(
-                        choices=[('WORKING', 'working'), ('ERROR', 'error'), ('MAINTENANCE', 'maintenance'),
-                                 ('UNKNOWN', 'unknown')], default='UNKNOWN', max_length=20)),
+                            choices=[('WORKING', 'working'), ('ERROR', 'error'), ('MAINTENANCE', 'maintenance'),
+                                     ('UNKNOWN', 'unknown')], default='UNKNOWN', max_length=20)),
                     ('message', models.TextField(max_length=1000, null=True)),
                 ],
                 options={
@@ -44,9 +45,11 @@ class Migration(migrations.Migration):
                     ('username',
                      models.CharField(max_length=15, primary_key=True, serialize=False, verbose_name='Username')),
                     (
-                    'twt_bearer_token', models.CharField(max_length=256, unique=True, verbose_name='TWT Bearer Token')),
+                        'twt_bearer_token',
+                        models.CharField(max_length=256, unique=True, verbose_name='TWT Bearer Token')),
                     (
-                    'twt_consumer_key', models.CharField(max_length=256, unique=True, verbose_name='TWT Consumer Key')),
+                        'twt_consumer_key',
+                        models.CharField(max_length=256, unique=True, verbose_name='TWT Consumer Key')),
                     ('twt_consumer_secret',
                      models.CharField(max_length=256, unique=True, verbose_name='TWT Consumer Key')),
                     ('twt_access_key',
@@ -54,7 +57,8 @@ class Migration(migrations.Migration):
                     ('twt_access_secret', models.CharField(max_length=256, unique=True, verbose_name='TWT Access Key')),
                     ('slk_bot_token', models.CharField(max_length=256, unique=True, verbose_name='Slack Bot Token')),
                     (
-                    'slk_bot_channel', models.CharField(max_length=256, unique=True, verbose_name='Slack Bot Channel')),
+                        'slk_bot_channel',
+                        models.CharField(max_length=256, unique=True, verbose_name='Slack Bot Channel')),
                     ('logo', models.ImageField(upload_to='accounts/', verbose_name='Logo')),
                     ('tweet_image_template',
                      models.ImageField(upload_to='accounts/', verbose_name='Tweet Image Template')),
@@ -86,7 +90,8 @@ class Migration(migrations.Migration):
                 name='TweetModel',
                 fields=[
                     (
-                    'id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                        'id',
+                        models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                     ('created', model_utils.fields.AutoCreatedField(default=django.utils.timezone.now, editable=False,
                                                                     verbose_name='created')),
                     ('modified',

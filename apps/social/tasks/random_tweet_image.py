@@ -9,9 +9,9 @@ from loguru import logger
 from psycopg2 import OperationalError
 
 from core import messages as core_messages
-# Setup django to be able to access the settings file
 from core.utils.resources import write_on_image
 
+# Setup django to be able to access the settings file
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
 django.setup()
 
